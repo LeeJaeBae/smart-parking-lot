@@ -35,7 +35,28 @@ end
 ==경로 안내==
 
 ==주차 조회==
-
+user -> user : 모바일 페이지 접속
+activate user
+    user -> server : [Request] 차량 번호 조회
+    note left : vehicle_id
+    activate server #yellow
+        server -> server : [Query-Select] 차량 정보 조회
+        server -> user : [Response] 차량 정보 반환
+        note right : vehicle_id, enter_date, \n parking_time, charge
+    deactivate server
+deactivate user
 ==출차 관리==
+EntranceCam -> server : [Request] 차량 정보 조회
+activate enter
+note right : 총 주차시간, 주차요금
+activate server #yellow
+    server -> server : [Query-Select] 주차 요금 조회
+    server -> enter : [Response] 주차 요금 정보 반환
+deactivate server
+enter -> user : 주차 요금 알림
+activate user
+user -> enter : 결제
+deactivate user
+deactivate enter
 
 @enduml
