@@ -7,7 +7,11 @@ actor Administrator as admin
 control Server as server
 entity MainCam as main
 entity EntranceCam as enter
+entity JunctionSign as sign
 
+main->main : 프로그램 시작
+activate main #blue
+main -> main : 차량 디텍팅 루프
 ==입차 관리==
 enter -> enter : [START] 차량 인식
 activate enter
@@ -33,6 +37,61 @@ deactivate enter
 end
 
 ==경로 안내==
+group 교차로 신호
+main -> main : 차량 교차로 진입
+activate main
+    main -> server : [Request] 교차로 신호 조회
+    note right : vehicle_id, junction_id
+deactivate main
+activate server #yellow
+    server -> server : [Query-select] 차량 경로 조회
+    server -> sign : [Request] 교차로 신호 전달
+    activate sign
+        sign -> sign : 신호등 동작
+        sign -> server : [Response] success
+    deactivate sign
+deactivate server
+end
+
+group 경로 변경
+main -> main : 경로 이탈 차량 감지
+activate main
+    main -> server : [Request] 경로이탈 차량, 경로 위치 전달
+    note right : vehicle_id, route_id
+    activate server #yellow
+        server -> server : [Query-select] 해당경로 이용 차량 조회
+        alt 차량이 있는 경우
+            server -> server : 해당 차량 경로 재설정
+            server -> main : [Request] 경로 변경 차량, 변경된 경로 전달
+                activate main #red
+                main -> main : 해당 차량 경로 변경
+                main -> server : [Response] success
+                deactivate main
+        end
+        server -> server : 이탈차량 경로 재설정
+        server -> main : [Response] 이탈 차량, 변경된 경로 전달
+    deactivate server
+deactivate main
+end
+
+group 출차 차량 경로 방해
+main -> main : 차량 경로에 출차차량 감지
+activate main
+    main -> server : [Request] 경로 위치 전달
+    activate server #yellow
+        server -> server : [Query-select] 해당경로 이용 차량 조회
+        alt 차량이 있는 경우
+           server -> server : 해당 차량 경로 재설정
+           server -> main : [Request] 경로 변경 차량, 변경된 경로 전달
+               activate main #red
+               main -> main : 해당 차량 경로 변경
+               main -> server : [Response] success
+               deactivate main
+        end
+    server -> main : [Response] success
+    deactivate server
+deactivate main
+end
 
 ==주차 조회==
 user -> user : 모바일 페이지 접속
@@ -59,4 +118,5 @@ user -> enter : 결제
 deactivate user
 deactivate enter
 
+deactivate main
 @enduml
