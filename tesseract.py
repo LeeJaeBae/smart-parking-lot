@@ -2,7 +2,7 @@ import cv2
 import pytesseract
 import numpy as np
 
-img = cv2.imread('test1.png')
+img = cv2.imread('IMG_1949.jpg')
 img = cv2.resize(img, dsize=(1024, 800), interpolation=cv2.INTER_AREA)
 
 
