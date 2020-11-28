@@ -27,34 +27,34 @@ cam = cv2.VideoCapture(0)
 
 while cam.isOpened():
     ret, img = cam.read()
-    img = cv2.resize(img, dsize=(1024, 800), interpolation=cv2.INTER_AREA)
-    height, width, channel = img.shape
-
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    structuringElement = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-
-    imgTopHat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, structuringElement)
-    imgBlackHat = cv2.morphologyEx(gray, cv2.MORPH_BLACKHAT, structuringElement)
-
-    imgGrayscalePlusTopHat = cv2.add(gray, imgTopHat)
-    gray = cv2.subtract(imgGrayscalePlusTopHat, imgBlackHat)
-
-    img_blurred = cv2.GaussianBlur(gray, ksize=(5, 5), sigmaX=0)
-
-    img_thresh = cv2.adaptiveThreshold(
-        img_blurred,
-        maxValue=255.0,
-        adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-        thresholdType=cv2.THRESH_BINARY_INV,
-        blockSize=19,
-        C=9
-    )
-    cv2.imshow('test', img_thresh)
+    # img = cv2.resize(img, dsize=(1024, 800), interpolation=cv2.INTER_AREA)
+    # height, width, channel = img.shape
+    #
+    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    #
+    # structuringElement = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+    #
+    # imgTopHat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, structuringElement)
+    # imgBlackHat = cv2.morphologyEx(gray, cv2.MORPH_BLACKHAT, structuringElement)
+    #
+    # imgGrayscalePlusTopHat = cv2.add(gray, imgTopHat)
+    # gray = cv2.subtract(imgGrayscalePlusTopHat, imgBlackHat)
+    #
+    # img_blurred = cv2.GaussianBlur(gray, ksize=(5, 5), sigmaX=0)
+    #
+    # img_thresh = cv2.adaptiveThreshold(
+    #     img_blurred,
+    #     maxValue=255.0,
+    #     adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+    #     thresholdType=cv2.THRESH_BINARY_INV,
+    #     blockSize=19,
+    #     C=9
+    # )
+    cv2.imshow('test', img)
     k = cv2.waitKey(1)
-    text = pytesseract.image_to_string(img_thresh, lang="kor+eng", config='--psm 3 --oem 1')
-    print(text)
-    if k == 27: break
+    # text = pytesseract.image_to_string(img_thresh, lang="kor+eng", config='--psm 3 --oem 1')
+    # print(text)
+    # if k == 27: break
 
 cam.release()
 cv2.destroyAllWindows()
