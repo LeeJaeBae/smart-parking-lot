@@ -23,7 +23,7 @@ import pytesseract
 # 2    Legacy + LSTM engines.
 # 3    Default, based on what is available.
 # """
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(-1)
 
 while cam.isOpened():
     ret, img = cam.read()
