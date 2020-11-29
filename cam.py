@@ -50,7 +50,10 @@ while cam.isOpened():
     #     blockSize=19,
     #     C=9
     # )
-    cv2.imshow('test', img)
+    try:
+        cv2.imshow('test', img)
+    except:
+        print('error')
     k = cv2.waitKey(1)
     # text = pytesseract.image_to_string(img_thresh, lang="kor+eng", config='--psm 3 --oem 1')
     # print(text)
