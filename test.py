@@ -289,6 +289,6 @@ def ttt(data, resizing=False):
                   color=(255, 0, 0), thickness=2)
 
 
-ttt('out5.jpeg')
+ttt('small.jpeg')
 
 # show(cv2.imread('11.jpg'))
