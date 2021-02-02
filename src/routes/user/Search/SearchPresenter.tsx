@@ -1,7 +1,7 @@
-import React, {Dispatch, useState} from 'react';
+import React, {Dispatch} from 'react';
 import styled from 'styled-components';
 import find from '../../../img/find.png'
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Template from "../../../components/templates/mobile";
 
 const SearchPresenter: React.FC<{ handleSubmit: any, setCarId: Dispatch<React.SetStateAction<string>> }> = ({
@@ -26,19 +26,6 @@ const SearchPresenter: React.FC<{ handleSubmit: any, setCarId: Dispatch<React.Se
 
 export default SearchPresenter;
 
-const Container = styled.div`
-  text-align: center;
-  padding-top: 150px;
-`
-
-const Logo = styled.div`
-  margin-bottom: 50px;
-
-  img {
-    width: 200px;
-    height: 150px;
-  }
-`
 
 const InputSearch = styled.input`
   background-color: white;
