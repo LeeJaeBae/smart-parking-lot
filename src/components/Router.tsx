@@ -1,14 +1,24 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {Search} from "../routes";
+import {Information, NotFound, ParkingLot, Search} from "../routes";
 
 const Router = () => {
 
     return (
         <BrowserRouter>
             <Switch>
-                <Route path={"/"}>
+                <Route exact path={"/"}>
                     <Search/>
+                </Route>
+                <Route exact path={"/parking"}>
+                    <ParkingLot/>
+                </Route>
+                <Route exact path={"/parking/:id"}>
+                    <Information/>
+                </Route>
+
+                <Route path={"/"}>
+                    <NotFound/>
                 </Route>
             </Switch>
         </BrowserRouter>

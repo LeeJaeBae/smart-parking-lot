@@ -1,26 +1,26 @@
-import React from 'react';
+import React, {Dispatch, useState} from 'react';
 import styled from 'styled-components';
-import mobileLogo from '../../../img/mobile_logo.png'
 import find from '../../../img/find.png'
+import {Link, useLocation} from 'react-router-dom';
+import Template from "../../../components/templates/mobile";
 
-const SearchPresenter = () => {
+const SearchPresenter: React.FC<{ handleSubmit: any, setCarId: Dispatch<React.SetStateAction<string>> }> = ({
+                                                                                                                handleSubmit,
+                                                                                                                setCarId
+                                                                                                            }) => {
+
     return (
-        <Container>
-            <Logo>
-                <img src={mobileLogo} alt="mobile_logo"/>
-            </Logo>
+        <Template>
             <div>
-                <form action="" method="POST">
-                    <div>
-                        <InputSearch type="text" id="searchMyCarNum" name="myCarNum"/>
-                        <InputSubmit type="submit" id="search" icon={find} value={" "}/>
-                    </div>
+                <form onSubmit={handleSubmit}>
+                    <InputSearch type="text" onChange={(e) => setCarId(e.target.value)}/>
+                    <InputSubmit type="submit" icon={find} value={" "}/>
                 </form>
             </div>
             <Information>
-                <a href="">주차장 혼잡도 확인하기.</a>
+                <Link to={"/information"}>주차장 혼잡도 확인하기</Link>
             </Information>
-        </Container>
+        </Template>
     );
 };
 
@@ -39,9 +39,6 @@ const Logo = styled.div`
     height: 150px;
   }
 `
-
-// const SearchBar = styled.div`
-// `
 
 const InputSearch = styled.input`
   background-color: white;
