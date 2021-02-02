@@ -18,7 +18,7 @@ const SearchPresenter: React.FC<{ handleSubmit: any, setCarId: Dispatch<React.Se
                 </form>
             </div>
             <Information>
-                <Link to={"/information"}>주차장 혼잡도 확인하기</Link>
+                <Link to={"/parking"}>주차장 혼잡도 확인하기</Link>
             </Information>
         </Template>
     );
