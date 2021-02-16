@@ -1,0 +1,21 @@
+
+#error_img {
+    margin-top: 20px;
+}
+#error_img > img {
+    width: 120px;
+    height: 108px;
+}
+
+#texting {
+    margin: 20px 0 20px 0;
+}
+
+#searchAgain {
+    background-color: #12c386;
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}

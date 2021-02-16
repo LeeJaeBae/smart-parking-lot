@@ -1,0 +1,22 @@
+#searchMyCarNum {
+	background-color: white;
+	border-color: #1459f9;
+	border-width: medium;
+	border-style: solid;
+	width: 260px;
+	height: 35px;
+	margin-right: 5px;
+	padding-left: 7px;
+}
+
+#search {
+	background-image: url('../../../style/img/search_btn.png');
+	width: 37px;
+	height: 37px;
+	background-size: cover;
+	border: none;
+}
+
+#congetion {
+	margin-top: 20px;
+}

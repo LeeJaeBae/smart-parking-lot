@@ -1,0 +1,11 @@
+* {
+	box-sizing: border-box;
+	font-family: 'NanumSquare Regular';
+}
+
+body {
+	width: 414px;
+	height: 736px;
+	text-align: center;
+	margin: 0 auto;
+}

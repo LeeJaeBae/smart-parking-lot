@@ -1,0 +1,19 @@
+
+
+#myCarLocation {
+    margin: 30px 0 30px 0;
+}
+
+#button {
+    margin-top: 30px;
+}
+.buttons {
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    margin: 5px;
+}
+#searchAgain { background-color: #12c386;}
+#pay { background-color: #f0b416;}
