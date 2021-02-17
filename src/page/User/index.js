@@ -1,6 +1,6 @@
-import UserCongetion from './Congetion/UserCongetion';
+import UserCongestion from './Congetion/UserCongestion';
 import UserError from './Error/UserError';
 import UserLocation from './Location/UserLocation';
 import UserMain from './Main/UserMain';
 
-export { UserCongetion, UserError, UserLocation, UserMain };
+export {UserCongestion, UserError, UserLocation, UserMain};

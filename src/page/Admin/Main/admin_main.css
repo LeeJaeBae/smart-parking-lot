@@ -1,0 +1,45 @@
+.status {
+	padding: 20px 0 20px 0;
+	text-align: center;
+	font-size: large;
+}
+.camera {
+	width: 1000px;
+	text-align: center;
+	margin-left: 20px;
+}
+.camera,
+.camera th,
+.camera td {
+	border: 1px solid #eeeff5;
+	border-collapse: collapse;
+}
+
+.video_label {
+	background-color: #12c386;
+	color: white;
+	height: 25px;
+}
+.video {
+	height: 340px;
+}
+/* .cctv {
+    height: 500px;
+} */
+
+.in {
+	margin-left: 40px;
+	width: 100px;
+}
+.out {
+	margin-right: 40px;
+	width: 100px;
+}
+.parkingLot {
+	width: 200px;
+	margin-left: 40px;
+	text-align: center;
+	position: absolute;
+	clear: left;
+	bottom: 50px;
+}

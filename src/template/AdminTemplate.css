@@ -1,0 +1,25 @@
+body {
+	width: 1280px;
+	height: 100vh;
+	margin: 0 auto;
+	border: 1px;
+}
+#background {
+	text-align: center;
+}
+.title_contents {
+	width: 1040px;
+	height: 100vh;
+	margin-left: 240px;
+	background-color: #eeeff5;
+}
+.title {
+	height: 65px;
+	padding-top: 20px;
+	padding-left: 30px;
+	background-color: #3b3b3b;
+	color: white;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: larger;
+}
