@@ -7,7 +7,7 @@ function UserRouter() {
             <Route exact path='/' component={UserMain}/>
             <Route path='/error' component={UserError}/>
             <Route path='/congestion' component={UserCongestion}/>
-            <Route path='/location' component={UserLocation}/>
+            <Route path='/location/:id' component={UserLocation}/>
         </>
     );
 }

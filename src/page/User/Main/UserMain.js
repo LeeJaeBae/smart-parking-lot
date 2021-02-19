@@ -1,8 +1,16 @@
-import React from 'react';
+import React , { useState , useEffect, useRef } from 'react';
 import styled from 'styled-components';
+
+// import axios from './axios';
+import { getLocationCar } from '../../../api/user';
+
+import { Link, Redirect  } from 'react-router-dom';
+import { Route } from '../../../config/routes';
 
 import './user_main.css';
 import userlogo_img from '../../../style/img/user_logo.png';
+import axios from 'axios';
+
 
 const Background = styled.div`
 	text-align: center;
@@ -19,21 +27,56 @@ const UserLogo = styled.div`
 	background-repeat: no-repeat;
 `;
 
+
+
 const UserMain = () => {
+	// 내 차 위치
+	const [data, setData] = useState([]);
+	const [searchText, setSearchText] = useState("");
+
+	useEffect(() => {
+		searchText !== "" && getLocationCar(setData, searchText)
+	}, [searchText]);
+
+	const text = useRef();
+	const handleSearch = (e) =>{
+		setSearchText(text.current.value);
+	}
+
+	// const isThereText = (searchText , data) => {
+	// 	if( data != null && searchText !== "" ) {
+	// 		alert("※ 차번호를 찾을 수 없습니다 ");
+	// 		return ( <></> )
+	// 	}
+	// 	else {
+	// 		return ( <></> )
+	// 	}
+	// }
+
+
+
 	return (
 		<Background>
 			<UserLogo />
 			<div>
-				<form action='/location/ip/api/locationCar' method='GET'>
-					<div className='searchbox'>
-						<input type='text' id='searchMyCarNum' name='numberPlate' />
-						<input type='submit' id='search' value='　' />
-					</div>
-				</form>
+				<div className='searchbox'>
+					<input ref={text} type='text' id='searchMyCarNum' name='numberPlate' />
+					<input onClick={handleSearch} type='button' id='search' value='　'/>
+				</div>
 			</div>
+			{
+				// 만약 data 값이 있을 경우 location으로 데이터를 전달하고
+				// 검색값이 있으나 data가 없으면 존재하지 않는 차 번호라고 알람을 띄운다
+				data.length > 0 ?
+				<Redirect to={{pathname:`/location/${searchText}`, state:{data}}}  />
+				:
+				// isThereText(searchText , data)
+				<></>
+			} 
 			<div id='congetion'>
-				<a href='/congetion/ip/api/checkSpace'>주차장 혼잡도 확인하기</a>
+				<Link to={Route.user.congestion}>주차장 혼잡도 확인하기</Link>
 			</div>
+
 		</Background>
 	);
 };

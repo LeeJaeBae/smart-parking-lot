@@ -4,13 +4,13 @@ export class Route {
 		allParkingData: '/admin/alldata',
 		currentParkingList: '/admin/current',
 		Income: '/admin/income',
-		logout: 'logout',
+		logout: 'logout'
 	};
 
 	static user = {
 		main: '/',
 		congestion: '/congestion',
 		location: '/location',
-		error: '/error',
+		error: '/error'
 	};
 }
