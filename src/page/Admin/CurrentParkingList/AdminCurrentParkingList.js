@@ -20,15 +20,33 @@ const RightTHstyle = {
 };
 
 const CurrentPList = () => {
-	const [data, setData] = useState([]);
+
+	// 시간당 요금
+	let fee = 100;
+
+	// 현재요금 구하는 함수
+	const getFee = (entryTime, fee) => {
+		var entryTime = new Date(entryTime);
+		var nowTime	  = new Date();
+		var Interval  = nowTime - entryTime;
+		var elapsedHours = Math.floor((Interval / (1000 * 60 * 60)));
+		var userFee = elapsedHours * fee;
+
+		return userFee;
+	}
+
+
+
+	// 현재 주차된 목록을 배열로 가져옴
+	const [current, setCurrent] = useState([]);
 
 	useEffect(() => {
-		getAdminParkingList(setData);
+		getAdminParkingList(setCurrent);
 	}, []);
 
 	useEffect(() => {
-		console.log(data);
-	}, [data]);
+		console.log(current);
+	}, [current]);
 
 	return (
 		<>
@@ -63,13 +81,13 @@ const CurrentPList = () => {
 						<th style={RightTHstyle}>　</th>
 					</tr>
 					{/* 주차 목록 */}
-					{data &&
-						data.map((car) => (
+					{current && current.map((car) => (
+						
 							<tr>
-								<td>{car.car_parking_id}</td>
-								<td>{car.car_number_plate}</td>
-								<td>{car.car_entry_time}</td>
-								<td>{car.car_fee}</td>
+								<td>{ car.car_parking_id }</td>
+								<td>{ car.car_number_plate }</td>
+								<td>{ car.car_entry_time }</td>
+								<td>{ getFee(car.car_entry_time, fee) }</td>
 								<td>
 									<input type='hidden' name='car_id' value={car.car_id} />
 									<input className='modify' type='submit' value='수정' />

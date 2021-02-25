@@ -4,6 +4,7 @@ import {
 	AdminMain,
 	AdminIncome,
 	AdminAllParkingData,
+	AdminLogin
 } from '../../page/Admin';
 
 function AdminRouter() {
@@ -21,6 +22,9 @@ function AdminRouter() {
 			<Route exact path='/admin/alldata'>
 				<AdminAllParkingData />
 			</Route>
+			{/* <Route path='/admin/login'>
+				<AdminLogin/>
+			</Route> */}
 		</>
 	);
 }
