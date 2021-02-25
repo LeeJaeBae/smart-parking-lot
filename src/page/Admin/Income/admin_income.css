@@ -1,43 +1,42 @@
 .period_income {
-    text-align: center;
-    height: 50px;
-    margin-top: 20px;
+	text-align: center;
+	height: 50px;
+	margin-top: 20px;
 }
 
 .setPeriod {
-    text-align: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    float: left;
-    height: 80px;
+	text-align: left;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	float: left;
+	height: 80px;
 }
 .income_form {
-    width: 500px;
+	width: 700px;
 }
 .income_btn {
-    width: 60px;
-    height: 35px;
-    margin-right: 5px;
-    background-color: #ff8a00;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: large;
+	width: 60px;
+	height: 35px;
+	margin-right: 5px;
+	background-color: #ff8a00;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	font-size: large;
 }
 
 .income {
-    margin-right: 50px;
-    float: right;
-    font-size: x-large;
+	margin-right: 50px;
+	float: right;
+	font-size: x-large;
 }
 
-
 .chart {
-    width: 1000px;
-    height: 500px;
-    background-color: white;
-    text-align: center;
-    margin-left: 20px;
-    margin-top: 20px;
-    padding: 10px;
+	width: 1000px;
+	height: 500px;
+	background-color: white;
+	text-align: center;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding: 10px;
 }
