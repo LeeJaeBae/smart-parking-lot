@@ -6,4 +6,3 @@ import App from './App/App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// ㄴㅏ는 주석이다
