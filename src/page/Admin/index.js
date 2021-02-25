@@ -3,6 +3,7 @@ import Main from './Main/AdminMain';
 import AllParkingData from './AllParkingData/AllParkingData';
 import CurrentParkingList from './CurrentParkingList/AdminCurrentParkingList';
 import Income from './Income/AdminIncome';
+import Login from './Login/AdminLogin';
 
 const AdminMain = () => (
 	<AdminTemplate>
@@ -26,4 +27,8 @@ const AdminIncome = () => (
 	</AdminTemplate>
 );
 
-export { AdminMain, AdminAllParkingData, AdminCurrentParkingList, AdminIncome };
+const AdminLogin = () => (
+	<Login/>
+);
+
+export { AdminMain, AdminAllParkingData, AdminCurrentParkingList, AdminIncome, AdminLogin };

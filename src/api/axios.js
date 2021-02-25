@@ -5,7 +5,7 @@ const instance = axios.create({ baseURL: process.env.REACT_APP_SERVER_API_BASE_U
 
 instance.interceptors.response.use(
 	(res) => {
-		console.log(res);
+		// console.log(res);
 		return res;
 	},
 	(error) => {

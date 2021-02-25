@@ -4,21 +4,27 @@ import axios from './axios';
  * getLiveSituation
  * return res.data = [현재주차수, 누적주차수, 오늘매출]
  */
+
+ // 현재 주차장 현황 (webRTC)
 export const getAdminLiveSituation = (setState) =>
 	axios.get(`/liveSituation`).then((res) => {
 		res.data.liveSituation && setState(res.data.liveSituation);
 	});
+
+// 현재 주차중인 차 목록
 export const getAdminParkingList = (setState) =>
 	axios.get(`/parkingList`).then((res) => {
 		res.data.parkingList && setState(res.data.parkingList);
 	});
-export const getAdminFeeGraph = (setState) =>
-	axios.get(`/feeGraph`).then((res) => {
-		res.data.feeList && res.data.feeList.length === 0
-			? setState([{ date: '2020-11-11', fee: 100 }])
-			: setState(res.data.feeList);
+
+// 수입 조회 (chart.js)
+export const getAdminFeeGraph = (setState , startTime, endTime) =>
+	axios.get(`/feeGraph` , {params : {startTime , endTime}}).then((res) => {
+		setState(res.data.feeList);
 	});
-export const getAdminTotalCarList = (setState) =>
-	axios.get(`/totalCarList`).then((res) => {
-		setState(res.data);
+
+// 누적 주차 데이터 (startTime, endTime 전달)
+export const getAdminTotalCarList = ( setState , startTime , endTime ) =>
+	axios.get(`/totalCarList` , {params : {startTime , endTime}}).then((res) => {
+		setState(res.data.totalCarList);
 	});

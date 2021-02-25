@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminLiveSituation } from '../../../api/admin';
 import './admin_main.css';
+
+
 const style = {
 	display: 'inline-block',
 	width: '100%',

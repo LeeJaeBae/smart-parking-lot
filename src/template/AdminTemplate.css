@@ -23,3 +23,27 @@ body {
 	text-align: left;
 	font-size: larger;
 }
+
+
+@media screen and (max-width: 414px) {
+    
+* {
+    box-sizing: border-box;
+    font-family: 'NanumSquare Regular';
+  }
+  
+  
+  body {
+    width : 414px;
+    height: 736px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+}
