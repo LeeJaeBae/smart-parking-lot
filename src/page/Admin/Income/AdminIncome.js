@@ -92,11 +92,18 @@ const Income = () => {
 
 	var start = new Date();
 	const [endDate, setEndDate] = useState(new Date());
-	const [startDate, setStartDate] = useState(new Date());
+	// const [startDate, setStartDate] = useState(new Date());
 
 	const [feeData, setFeeData] = useState([]);
+	const [usePeriod , setUsePeriod] = useState('week');
 	const [total, setTotal] = useState(0);
 	var totalIncome = 0;
+
+
+	// 최초 데이터 로드
+	useEffect(() => {
+		handleGetData();
+	}, [])
 
 
 	useEffect(() => {
@@ -135,7 +142,6 @@ const Income = () => {
 			}
 		}
 
-
 		setTotal(totalIncome);
 		setChartDataList(chartData);
 		setChartLabelList(chartLabel);
@@ -163,7 +169,6 @@ const Income = () => {
 
 
 	// 기간선택 & 데이터 가져오기
-	const [usePeriod , setUsePeriod] = useState('week');
 	const handleGetData = () => {
 		console.log('테스트값 : ' + usePeriod);
 		var Period = 0;
@@ -192,7 +197,7 @@ const Income = () => {
 		console.log("끝 : " + endDate);
 
 		getAdminFeeGraph(setFeeData, start, endDate);
-		setStartDate(start);
+		// setStartDate(start);
 	}
 
 	const getSelectedPeriod = (e) => {
