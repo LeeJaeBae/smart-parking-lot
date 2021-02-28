@@ -25,18 +25,57 @@
 	font-size: large;
 }
 
+.date_standard { /*기준일*/
+	display: inline-flex;
+	height: 35px;
+	color: white;
+	border-color: #ff8a00;
+	border-width: medium;
+	background-color: #ff8a00;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 1px;
+	padding: 8px 5px 0px 8px;
+}
+
+.income_datebox { /*날짜지정박스*/
+	height: 35px;
+	border-color: #ff8a00;
+    border-width: medium;
+    border-style: solid;
+	margin-right: 7px;
+	padding-left: 7px;
+}
+
+.income_searchbtn {
+	height: 35px;
+	margin-right: 5px;
+	background-color: #ff8a00;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: large;
+}
+
 .income {
 	margin-right: 50px;
 	float: right;
 	font-size: x-large;
 }
 
+/* .period_radio input[type="radio"] {
+	content: '\2714';
+	color: #ff8a00;
+} */
+
 .chart {
 	width: 1000px;
-	height: 500px;
+	height: 550px;
 	background-color: white;
 	text-align: center;
 	margin-left: 20px;
 	margin-top: 20px;
 	padding: 10px;
 }
+
+

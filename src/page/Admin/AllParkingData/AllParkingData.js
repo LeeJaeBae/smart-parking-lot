@@ -20,7 +20,7 @@ const AllParkingData = () => {
 	const [allData, setAllData] = useState([]);
 	const [endDate, setEndDate] = useState(new Date());
 	const [startDate, setStartDate] = useState(new Date());
-	const [specifiedDuration, setSpecifiedDuration] = useState(1);
+	// const [specifiedDuration, setSpecifiedDuration] = useState(1);
 
 	// Component did mount ->
 	useEffect(() => {
@@ -35,19 +35,6 @@ const AllParkingData = () => {
 		return new Date().toISOString().substring(0, 10);
 	};
 
-	// date에서 날짜만 뽑아오는 함수 (yyyy-mm-dd)
-	const getDateOfUsed = (date) => {
-		var DateOfUsed = '';
-		var date = new Date(date);
-		DateOfUsed += date.getFullYear() + '-';
-		date.getMonth() + 1 < 10
-			? (DateOfUsed += '0' + (date.getMonth() + 1) + '-')
-			: (DateOfUsed += date.getMonth() + 1 + '-');
-		date.getDate() < 10 ? (DateOfUsed += '0' + date.getDate()) : (DateOfUsed += date.getDate());
-		return DateOfUsed;
-	};
-
-	// const period = useRef();
 
 	const setPeriod = (p) => {
 		var period = 0;
@@ -56,7 +43,7 @@ const AllParkingData = () => {
 		console.log('period : ' + p);
 		switch (p) {
 			case 'today':
-				period = 1;
+				period = 0;
 				break;
 			case 'week':
 				period = 7;
@@ -68,7 +55,7 @@ const AllParkingData = () => {
 				period = 90;
 				break;
 			case '6month':
-				period = 800;
+				period = 180;
 				break;
 			default:
 				period = 1;
@@ -106,6 +93,12 @@ const AllParkingData = () => {
 			// 끝 날짜
 			setEndDate(new Date(e.target.value));
 		}
+	};
+
+
+	// 요금 천단위마다 , 찍는 포맷
+	const setFeeFormat = (fee) => {
+		return fee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	};
 
 	//////////////////////////////////////////////////////////
@@ -193,7 +186,6 @@ const AllParkingData = () => {
 				<table className='alldata_table'>
 					<tr>
 						<th style={LeftTHstyle}>날짜</th>
-						<th>구역</th>
 						<th>차번호</th>
 						<th>입차</th>
 						<th>출차</th>
@@ -204,16 +196,16 @@ const AllParkingData = () => {
 					{allData.length > 0 ? (
 						allData.map((car) => (
 							<tr>
-								<td>{getDateOfUsed(car.car_entry_time)}</td> {/*날짜*/}
-								{/* console.log(new Date(car.car_entry_time).getDay); */}
-								<td>{car.car_parking_id}</td> {/*구역(자리번호)*/}
+								<td>{car.car_entry_time.substring(0, 10)}</td> {/*날짜*/}
 								<td>{car.car_number_plate}</td> {/*차번호*/}
 								<td>{car.car_entry_time}</td> {/*입차*/}
 								<td>{car.car_exit_time}</td> {/*출차*/}
-								<td>{car.car_fee}</td> {/*요금*/}
 								<td>
-									{car.car_payment_type} {/*결제유형*/}
-								</td>
+									{ car.car_fee ?
+									setFeeFormat(car.car_fee) : car.car_fee
+									}
+								</td> {/*요금*/}
+								<td>{car.car_payment_type}{/*결제유형*/}</td>
 							</tr>
 						))
 					) : (

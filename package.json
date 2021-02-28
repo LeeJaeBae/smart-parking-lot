@@ -16,6 +16,7 @@
     "react-scripts": "4.0.2",
     "styled-components": "^5.2.1",
     "styled-reset": "^4.3.4",
+    "validator": "^13.5.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
