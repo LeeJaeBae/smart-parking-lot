@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { Line } from 'react-chartjs-2'; // chart.js import
 import { getAdminFeeGraph } from '../../../api/admin';
+import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
 import './admin_income.css';
 
 // import chart from './IncomeChart';
@@ -37,6 +38,7 @@ const Income = () => {
 	const chartLabel = [];
 
 	const refEnd = useRef();
+	const refStart = useRef();
 	// 차트
 	// const drawChart = (period) => {
 	// 	// feeData.length > 0 ? 
@@ -60,7 +62,11 @@ const Income = () => {
 	
 	const options = { // 차트의 옵션
 		maintainAspectRatio : true, // 차트 크기를 상위 div에 구속?
-		responsive : true, // 차트의 크기 자동조절?
+		responsive : false, // 차트의 크기 자동조절?
+		// tooltips: {
+		// 	mode: 'index',
+		// 	intersect: false,
+		// },
 		scales: {
 			yAxes: [
 				{
@@ -83,8 +89,11 @@ const Income = () => {
 				label: '주차요금',
 				data: chartDataList,
 				fill: false,
-				backgroundColor: 'rgb(255, 99, 132)',
-				borderColor: 'rgba(255, 99, 132, 0.2)',
+				backgroundColor: 'rgb(255, 138, 0)',
+				borderColor: 'rgba(255, 138, 0, 0.3)',
+				borderWidth: 2,
+				pointRadius: 2,
+				lineTension:0
 			},
 		],
 	};
@@ -92,6 +101,7 @@ const Income = () => {
 
 	var start = new Date();
 	const [endDate, setEndDate] = useState(new Date());
+	const [startDate, setStartDate] = useState(new Date(new Date() - 1000 * 60 * 60 * 24 * 7));
 	// const [startDate, setStartDate] = useState(new Date());
 
 	const [feeData, setFeeData] = useState([]);
@@ -153,7 +163,13 @@ const Income = () => {
 	const handleChangeDate = (e) => {
 		console.log('input date : ' + e.target.value);
 
-		setEndDate(new Date(e.target.value));
+		if(e.target === refStart.current) {
+			setStartDate(new Date(e.target.value));
+		}
+		else {
+			setEndDate(new Date(e.target.value));
+		}
+
 
 		// if(e.target === refEnd.curren)
 	}
@@ -167,36 +183,84 @@ const Income = () => {
 	// 	setChartLabelList(chartLabel);
 	// }
 
-
-	// 기간선택 & 데이터 가져오기
-	const handleGetData = () => {
-		console.log('테스트값 : ' + usePeriod);
-		var Period = 0;
-		switch(usePeriod) {
-			case 'week' :
-				console.log(usePeriod);
-				Period = 7;
+	// 기간선택 & 데이터 가져오기 - 버튼
+	const setPeriod = (p) => {
+		var period = 0;
+		// e.preventDefault();
+		// var specifiedDuration = 1;
+		console.log('period : ' + p);
+		switch (p) {
+			case 'week':
+				period = 7;
 				break;
-			case 'month':
-				console.log(usePeriod);
-				Period = 30;
+			case '1month':
+				period = 30;
 				break;
-			case 'year' :
-				console.log(usePeriod);
-				Period = 800;
+			case '3month':
+				period = 90;
 				break;
+			case '6month':
+				period = 180;
+				break;
+			case 'year':
+				period = 365;
+				break;				
+			default:
+				period = 7;
 		}
 
-		console.log(endDate);
-		console.log(Period);
+		return period;
+	};
+	const handleGetDataBtn = (e) => {
+		e.preventDefault();
+		const periodText = e.target.value;
+		const period = setPeriod(periodText);
+		const start = new Date(new Date() - 1000 * 60 * 60 * 24 * period);
+		setStartDate(start);
+		setEndDate(new Date());
+		refStart.current.value = start.toISOString().substring(0, 10);
+		refEnd.current.value = new Date().toISOString().substring(0, 10);
+		getAdminFeeGraph(setFeeData, start, new Date());
+	};
 
 
-		start = new Date(endDate - 1000 * 60 * 60 * 24 * Period); //
+	// 기간선택 & 데이터 가져오기 - 라디오
+	const handleGetData = (e) => {
+		// console.log('테스트값 : ' + usePeriod);
+		// var Period = 0;
+		// switch(usePeriod) {
+		// 	case 'week' :
+		// 		console.log(usePeriod);
+		// 		Period = 7;
+		// 		break;
+		// 	case '1month':
+		// 		console.log(usePeriod);
+		// 		Period = 30;
+		// 		break;
+		// 	case '6month' :
+		// 		console.log(usePeriod);
+		// 		Period = 180;
+		// 		break;
+		// 	case 'year' :
+		// 		console.log(usePeriod);
+		// 		Period = 365;
+		// 		break;
+		// }
 
-		console.log("시작 : " + start);
-		console.log("끝 : " + endDate);
+		// console.log(endDate);
+		// console.log(Period);
 
-		getAdminFeeGraph(setFeeData, start, endDate);
+
+		// start = new Date(endDate - 1000 * 60 * 60 * 24 * Period); //
+
+		// console.log("시작 : " + start);
+		// console.log("끝 : " + endDate);
+
+
+		//////
+
+
+		getAdminFeeGraph(setFeeData, startDate, endDate);
 		// setStartDate(start);
 	}
 
@@ -215,17 +279,55 @@ const Income = () => {
 				<div className='setPeriod'>
 					<div className='income_form'>
 						{/* 지정 날짜 기간 계산해서 넘기기 */}
-						<span className='date_standard'>기준일</span>
-						<input
+						<button
+						className='income_searchbtn'
+						onClick={handleGetDataBtn}
+						value='week'
+						name='period'>
+						일주일
+						</button>
+						<button
+						className='income_searchbtn'
+						onClick={handleGetDataBtn}
+						value='1month'
+						name='period'>
+						1개월
+						</button>
+						<button
+						className='income_searchbtn'
+						onClick={handleGetDataBtn}
+						value='6month'
+						name='period'>
+						6개월
+						</button>
+						<button
+						className='income_searchbtn'
+						onClick={handleGetDataBtn}
+						value='year'
+						name='period'>
+						1년
+						</button>
+						<span className='date_standard'>기간</span>
+						<input 
+							className='income_datebox'
+							ref={refStart}
+							onChange={handleChangeDate}
+							type='date'
+							max={endDate.toISOString().substring(0, 10)}
+							defaultValue={startDate.toISOString().substring(0, 10)}
+						/>
+						 ~&nbsp;&nbsp;
+						<input 
 							className='income_datebox'
 							ref={refEnd}
 							onChange={handleChangeDate}
 							type='date'
+							min={startDate.toISOString().substring(0, 10)}
 							max={new Date().toISOString().substring(0, 10)}
 							defaultValue={new Date().toISOString().substring(0, 10)}
 						/>
 						&nbsp;
-						<input 
+						{/* <input 
 						className='period_radio'
 						onClick={getSelectedPeriod} 
 						type="radio" 
@@ -238,7 +340,14 @@ const Income = () => {
 						onClick={getSelectedPeriod} 
 						type="radio" 
 						name="period" 
-						value="month"/>1개월
+						value="1month"/>1개월
+						&nbsp;
+						<input 
+						className='period_radio'
+						onClick={getSelectedPeriod} 
+						type="radio" 
+						name="period" 
+						value="6month"/>6개월
 						&nbsp;
 						<input 
 						className='period_radio'
@@ -246,7 +355,7 @@ const Income = () => {
 						type="radio" 
 						name="period" 
 						value="year"/>1년
-						&nbsp;&nbsp;
+						&nbsp;&nbsp; */}
 
 						<input 
 							className="income_searchbtn"

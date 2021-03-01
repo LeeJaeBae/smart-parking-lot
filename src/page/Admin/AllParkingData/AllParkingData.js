@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './admin_AllParkingData.css';
 import { getAdminTotalCarList } from '../../../api/admin';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 // import axios from '../../../api/axios';
 
 /**
