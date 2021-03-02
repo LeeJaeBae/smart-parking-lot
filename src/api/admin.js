@@ -13,9 +13,10 @@ export const getAdminLiveSituation = (setState) =>
 	});
 
 
-// 현재 주차중인 차 목록을 최근 입차순으로 세팅
-const sortCurrentData = (json) => {
 
+
+// 현재 주차중인 차 목록을 최근 입차순으로 세팅
+const sortDataByEntryTime = (json) => {
 	json.sort(function(a,b) { // 입차시각 오래된순
 		// console.log(isBefore("2019-09-09 05:44:23", "2019-09-09 05:44:26"))
 		return !isBefore(a.car_entry_time, b.car_entry_time)? 1 : -1;
@@ -33,17 +34,36 @@ export const getAdminParkingList = (setState) =>
 // 현재 주차중인 차 목록
 export const getAdminParkingListSearch = (setState, numberPlate) =>
 	axios.get(`/parkingList`, { params: { numberPlate } }).then((res) => {
-		res.data.parkingList && setState(sortCurrentData(res.data.parkingList));
+		res.data.parkingList && setState(sortDataByEntryTime(res.data.parkingList));
 	});
+
+
+// 현재 요금 가져오기 (income)
+export const getFee = (setState) =>
+	axios.get(`/searchFee`).then((res) => {
+		res.data.feeInfo && setState(res.data.feeInfo);
+});
+
+
+
+
 
 // 수입 조회 (chart.js)
 export const getAdminFeeGraph = (setState, startTime, endTime) =>
 	axios.get(`/feeGraph`, { params: { startTime, endTime } }).then((res) => {
 		setState(res.data.feeList);
 	});
+// 시간당 요금 변경
+export const setAdminFee = (setState, feeInfo) =>
+axios.get(`/feeUpdate`, { params: { feeInfo } }).then((res) => {
+	res.data.feeInfo && setState(res.data.feeInfo);
+});
+
+
+
 
 // 누적 주차 데이터 (startTime, endTime 전달)
 export const getAdminTotalCarList = (setState, startTime, endTime, numberPlate) =>
 	axios.get(`/totalCarList`, { params: { startTime, endTime, numberPlate } }).then((res) => {
-		setState(res.data.totalCarList);
+		setState(sortDataByEntryTime(res.data.totalCarList));
 	});

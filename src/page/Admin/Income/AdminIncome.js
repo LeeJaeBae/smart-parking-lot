@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { Line } from 'react-chartjs-2'; // chart.js import
-import { getAdminFeeGraph } from '../../../api/admin';
-import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
+import { getAdminFeeGraph , setAdminFee , getFee } from '../../../api/admin';
+// import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
 import './admin_income.css';
 
 // import chart from './IncomeChart';
@@ -39,6 +39,9 @@ const Income = () => {
 
 	const refEnd = useRef();
 	const refStart = useRef();
+
+	const refFee = useRef();
+	const [fee , setFee] = useState(1000);
 	// 차트
 	// const drawChart = (period) => {
 	// 	// feeData.length > 0 ? 
@@ -62,7 +65,7 @@ const Income = () => {
 	
 	const options = { // 차트의 옵션
 		maintainAspectRatio : true, // 차트 크기를 상위 div에 구속?
-		responsive : false, // 차트의 크기 자동조절?
+		responsive : true, // 차트의 크기 자동조절?
 		// tooltips: {
 		// 	mode: 'index',
 		// 	intersect: false,
@@ -112,12 +115,21 @@ const Income = () => {
 
 	// 최초 데이터 로드
 	useEffect(() => {
+		getFee(setFee);
 		handleGetData();
+		// console.log('요금 받아왔음');
 	}, [])
+
+	useEffect(() => {
+		// getFee(setFee);
+		// handleGetData();
+		// console.log('요금 받아왔음');
+		refFee.current.value = fee;
+	}, [fee])
 
 
 	useEffect(() => {
-		console.log(feeData);
+		// console.log(feeData);
 		// setTotal(0);
 
 		// map을 이용해 데이터(총 요금)&라벨(날짜) 배열에 추가
@@ -128,9 +140,9 @@ const Income = () => {
 			chartLabel.push(fee.fee_date)
 			));
 
-		console.log(totalIncome);
-		console.log(chartData);
-		console.log(chartLabel);
+		// console.log(totalIncome);
+		// console.log(chartData);
+		// console.log(chartLabel);
 
 		// 차트데이터 날짜 오름차순으로 정렬
 		for(var a = 0 ; a < chartLabel.length ; a++) {
@@ -259,7 +271,7 @@ const Income = () => {
 
 		//////
 
-
+		
 		getAdminFeeGraph(setFeeData, startDate, endDate);
 		// setStartDate(start);
 	}
@@ -271,9 +283,66 @@ const Income = () => {
 		setUsePeriod(e.target.value);
 	}
 
+	// 요금 변경
+	const handleSetFee = () => {
+		setFee(refFee.current.value);
+		// console.log('변경하고 싶은 요금 : ' + refFee.current.value);
+		setAdminFee(setFee , refFee.current.value);
+	}
+	
+	// //////모달창
+	const modalOpen = () => {
+		document.querySelector('.modal').classList.remove('hidden');
+	}
+	const modalClose = () => {
+		document.querySelector('.modal').classList.add('hidden');
+	}
+
+	// document.querySelector('.openModal').addEventListener('click', modalOpen);
+	// document.querySelector('.close_btn').addEventListener('click', modalClose);
+	// document.querySelector('.modal_background').addEventListener('click', modalClose);
+	
+
 
 	return (
 		<>
+{/* 
+		<div className="modal_background">
+				<div className="modal hidden">
+					<div className="close">
+						<button onClick={modalClose} className="close_btn">×</button>
+					</div>
+					<div className="modal_contents">
+						<table>
+							<tr>
+								<th>구역</th>
+								<th>차번호</th>
+								<th>입차시각</th>
+								<th>현재요금</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>
+									<input className="input_numberPlate" type="text" value="83무1604"/>
+								</td>
+								<td>15:03</td>
+								<td>6,000</td>
+							</tr>
+						</table>
+						<br/>
+						<div>
+							<button>수정하기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+ */}
+
+
+
+
+
+
 			{/* 기간 설정 */}
 			<div className='period_income'>
 				<div className='setPeriod'>
@@ -362,7 +431,8 @@ const Income = () => {
 							onClick={handleGetData} 
 							type='button' 
 							value='조회'
-							/>
+						/>
+						{/* <button className='openModal' onClick={modalOpen}>요금 변경</button> */}
 					</div>
 				</div>
 				<div className='income'>총 수입 {total}원</div>
@@ -379,6 +449,13 @@ const Income = () => {
 				:
 				<>데이터가 없습니다</>
 			}
+			</div>
+			{/* 요금 설정 */}
+			<div className='setFee'>
+				현재 요금은 시간당 {fee}원 이며,&nbsp;&nbsp;
+				<input type='number' ref={refFee} defaultValue={fee}/> 
+				원으로 변경합니다.
+				&nbsp;&nbsp;&nbsp;<button onClick={handleSetFee}>설정</button>
 			</div>
 		</>
 	);
