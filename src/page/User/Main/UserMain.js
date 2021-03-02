@@ -76,6 +76,9 @@ const UserMain = () => {
 			<div id='congetion'>
 				<Link to={Route.user.congestion}>주차장 혼잡도 확인하기</Link>
 			</div>
+			<div>
+				<Link to={Route.admin.main}>admin</Link>
+			</div>
 
 		</Background>
 	);
