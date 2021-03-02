@@ -20,7 +20,8 @@
     "styled-components": "^5.2.1",
     "styled-reset": "^4.3.4",
     "web-vitals": "^1.0.1",
-    "webrtc-adapter": "^7.7.0"
+    "webrtc-adapter": "^7.7.0",
+    "validator": "^13.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

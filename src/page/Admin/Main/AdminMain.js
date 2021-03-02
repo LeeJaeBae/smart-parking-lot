@@ -41,12 +41,16 @@ const Main = () => {
 							<td className='video'>출차영상</td>
 						</tr>
 						<tr>
-							<td className='video_label' colspan='2'>
+							<td className='video_label' colSpan='2'>
 								CCTV
 							</td>
 						</tr>
 						<tr>
+<<<<<<< HEAD
 							<td id='dtd' className='video cctv' colspan='2'>
+=======
+							<td className='video cctv' colSpan='2'>
+>>>>>>> b0992a889fccd5d2d7e13428f89f3c23190893e7
 								주차장 영상
 							</td>
 						</tr>

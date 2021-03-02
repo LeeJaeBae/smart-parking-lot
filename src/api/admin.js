@@ -1,4 +1,5 @@
 import axios from './axios';
+import {isBefore} from 'validator'
 
 /**
  * getLiveSituation
@@ -11,6 +12,18 @@ export const getAdminLiveSituation = (setState) =>
 		res.data.liveSituation && setState(res.data.liveSituation);
 	});
 
+
+// 현재 주차중인 차 목록을 최근 입차순으로 세팅
+const sortCurrentData = (json) => {
+
+	json.sort(function(a,b) { // 입차시각 오래된순
+		// console.log(isBefore("2019-09-09 05:44:23", "2019-09-09 05:44:26"))
+		return !isBefore(a.car_entry_time, b.car_entry_time)? 1 : -1;
+	});
+
+	return json;
+}
+
 // 현재 주차중인 차 목록
 export const getAdminParkingList = (setState) =>
 	axios.get(`/parkingList`).then((res) => {
@@ -20,7 +33,7 @@ export const getAdminParkingList = (setState) =>
 // 현재 주차중인 차 목록
 export const getAdminParkingListSearch = (setState, numberPlate) =>
 	axios.get(`/parkingList`, { params: { numberPlate } }).then((res) => {
-		res.data.parkingList && setState(res.data.parkingList);
+		res.data.parkingList && setState(sortCurrentData(res.data.parkingList));
 	});
 
 // 수입 조회 (chart.js)
