@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminLiveSituation } from '../../../api/admin';
+import { initJanus } from '../../../modules/client';
 import './admin_main.css';
 
 const style = {
@@ -14,8 +15,11 @@ const style = {
  */
 const Main = () => {
 	const [data, setData] = useState([]);
+	const [sessinId, setSessionId] = useState('');
+
 	useEffect(() => {
 		getAdminLiveSituation(setData);
+		initJanus();
 	}, []);
 	useEffect(() => {
 		console.log(data);
@@ -23,6 +27,7 @@ const Main = () => {
 
 	return (
 		<>
+			<input type='text' onChange={(e) => {}} />
 			<div className='status'>{`현재 ${data[0]}대 주차중 ${data[1]}대 평균 대기시간 4분 오늘 매출: ${data[2]}`}</div>
 			<div style={style}>
 				<div>
@@ -41,11 +46,12 @@ const Main = () => {
 							</td>
 						</tr>
 						<tr>
-							<td className='video cctv' colspan='2'>
+							<td id='dtd' className='video cctv' colspan='2'>
 								주차장 영상
 							</td>
 						</tr>
 					</table>
+					<video id='myvideo'>test</video>
 				</div>
 			</div>
 		</>
