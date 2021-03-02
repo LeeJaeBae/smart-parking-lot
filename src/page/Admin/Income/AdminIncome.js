@@ -453,7 +453,7 @@ const Income = () => {
 			{/* 요금 설정 */}
 			<div className='setFee'>
 				현재 요금은 시간당 {fee}원 이며,&nbsp;&nbsp;
-				<input type='number' ref={refFee} defaultValue={fee}/> 
+				<input type='number' ref={refFee} defaultValue={fee}/>
 				원으로 변경합니다.
 				&nbsp;&nbsp;&nbsp;<button onClick={handleSetFee}>설정</button>
 			</div>

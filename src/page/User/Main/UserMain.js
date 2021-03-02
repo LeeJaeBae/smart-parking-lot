@@ -2,7 +2,7 @@ import React , { useState , useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 // import axios from './axios';
-import { getLocationCar } from '../../../api/user';
+import { getLocationCar , getFee } from '../../../api/user';
 
 import { Link, Redirect  } from 'react-router-dom';
 import { Route } from '../../../config/routes';
@@ -33,6 +33,8 @@ const UserMain = () => {
 	// 내 차 위치
 	const [data, setData] = useState([]);
 	const [searchText, setSearchText] = useState("");
+
+
 
 	useEffect(() => {
 		searchText !== "" && getLocationCar(setData, searchText)

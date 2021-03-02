@@ -1,4 +1,5 @@
 import React , { useState , useEffect } from 'react';
+import { getFee } from '../../../api/user';
 // import { getLocationCar } from '../../../api/user';
 
 import styled from 'styled-components';
@@ -33,7 +34,8 @@ const User_logo = styled.div`
 const MyCar = () => {
 
 
-	var fee = 100; // 현재요금 100원으로 계산
+	// var fee = 100; // 현재요금 100원으로 계산
+	const [fee , setFee] = useState(2000);
 
 	const [data, setData] = useState([]);
 	const [myCarLocation, setMyCarLocation] = useState('');
@@ -43,12 +45,23 @@ const MyCar = () => {
 	useEffect(()=>{
 		console.log(location.state.data)
 		// location 안에 state가 있음
+		getFee(setFee);
 		location.state.data && setData(location.state.data)
 	},[])
 
-	if(data.length > 0) {
-		
-	}
+		// 현재요금 구하는 함수
+	const getNowFee = (entryTime, fee) => {
+		var entryTime = new Date(entryTime);
+		var nowTime = new Date();
+		var Interval = nowTime - entryTime;
+		var elapsedHours = Math.floor(Interval / (1000 * 60 * 60));
+		var nowFee = elapsedHours * fee;
+
+		nowFee = nowFee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	
+		return nowFee;
+	};
+
 	useEffect(()=> {
 
 		if(data.length > 0) {
@@ -66,7 +79,7 @@ const MyCar = () => {
 			console.log("입차"+entryTime);
 			console.log("현재"+nowTime);
 			console.log("경과시간"+elapsedHours);
-			setMyFee(elapsedHours * fee);
+			setMyFee(getNowFee(entryTime , fee));
 
 			console.log("내 차 위치 : " + data[1]+data[0]['car_parking_id']);
 			setMyCarLocation(data[1]+data[0]['car_parking_id']);
@@ -82,9 +95,9 @@ const MyCar = () => {
 			<Background>
 				<Link to="/">
 				<User_logo></User_logo>
-				</Link>
+				</Link> <br/>
 				<div id='myCarLocation'>내 차 위치는 {`${myCarLocation}`}이며, 요금은 {`${myFee}`}원 입니다</div>
-				<div id='Pmap'>(주차장 약도 들어갈 자리)</div>
+				<div id='Pmap'>　</div>
 				<div id='button'>
 					<Link to={Route.user.main}>
 					<button

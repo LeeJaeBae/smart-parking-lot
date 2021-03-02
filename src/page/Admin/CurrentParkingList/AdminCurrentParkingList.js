@@ -22,8 +22,10 @@ const RightTHstyle = {
 
 const CurrentPList = () => {
 	// 시간당 요금
-	// let fee = 100;
+
+	const refFee = useRef();
 	const [fee , setFee] = useState(1000); // 현재요금
+	
 
 	const refNumberPlate = useRef();
 

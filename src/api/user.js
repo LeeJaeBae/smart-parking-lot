@@ -10,3 +10,9 @@ export const getLocationCar = (setState , numberPlate) =>
     ? setState([{ locationCar : 'testArea' , fee: 9999}])
     : setState(res.data.locationCar)
     });
+
+// 현재 요금 가져오기 (income)
+export const getFee = (setState) =>
+axios.get(`/searchFee`).then((res) => {
+    res.data.feeInfo && setState(res.data.feeInfo);
+});
