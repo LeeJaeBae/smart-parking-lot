@@ -58,17 +58,17 @@ export const getFee = (setState) =>
 // 일간 조회
 export const getAdminFeeGraph = (setState, startTime, endTime) =>
 	axios.get(`/feeGraph`, { params: { startTime, endTime } }).then((res) => {
-		setState(res.data.feeList);
+		res.data.feeList &&	setState(res.data.feeList);
 	});
 // 주간 조회
 export const getFeeDataLabeledByWeek = (setState, startTime, endTime) =>
-	axios.get(`/feeGraph`, { params: { startTime, endTime } }).then((res) => {
-		setState(res.data.feeList);
+	axios.get(`/feeGraphWeek`, { params: { startTime, endTime } }).then((res) => {
+		res.data.feeList &&	setState(res.data.feeList);
 	});
 // 월별 조회
 export const getFeeDataLabeledByMonth = (setState, startTime, endTime) =>
-	axios.get(`/feeGraph`, { params: { startTime, endTime } }).then((res) => {
-		setState(res.data.feeList);
+	axios.get(`/feeGraphMonth`, { params: { startTime, endTime } }).then((res) => {
+		res.data.feeList &&	setState(res.data.feeList);
 	});
 
 // 시간당 요금 변경

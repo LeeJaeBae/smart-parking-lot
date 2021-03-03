@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2'; // chart.js import
-import { getAdminFeeGraph, setAdminFee, getFee } from '../../../api/admin';
+import { getAdminFeeGraph, getFeeDataLabeledByWeek , getFeeDataLabeledByMonth , setAdminFee, getFee } from '../../../api/admin';
 // import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
 import './admin_income.css';
 import useModal from '../../../template/modal/useModal';
@@ -127,9 +127,9 @@ const Income = () => {
 	useEffect(() => {
 		// console.log(feeData);
 		// setTotal(0);
-		
-		var label = null;
+		console.log('usePeriod : ' + usePeriod);
 		// map을 이용해 데이터(총 요금)&라벨(날짜) 배열에 추가
+		
 		if(usePeriod === 'day') { // 일별로 출력
 			feeData.length !== 0 &&
 			feeData.map(
@@ -142,39 +142,66 @@ const Income = () => {
 			);
 		}
 		else if(usePeriod === 'week') { // 주별로 출력
-			feeData.length !== 0 &&
-			feeData.map(
-				(fee) => (
-					(totalIncome += fee.fee_day),
-					chartData.push(fee.fee_day),
-					// console.log(typeof fee.fee_day),
-					label += fee.fee_start_date+'~<br/>'+fee.fee_end_date,
-					chartLabel.push(label)
-				)
-			);
+			if(feeData.length !== 0) {
+				for(var i = 0 ; i < feeData.length ; i++) {
+					var label = '';
+					totalIncome += feeData[i].fee_day;
+					chartData.push(feeData[i].fee_day);
+					label += feeData[i].fee_start_date+'~';
+					label += feeData[i].fee_end_date;
+					chartLabel.push(label);
+				}
+			}
+			// feeData.length !== 0 &&
+			// feeData.map(
+			// 	(fee) => (
+			// 		(totalIncome += fee.fee_day),
+			// 		chartData.push(fee.fee_day),
+			// 		// console.log(typeof fee.fee_day),
+			// 		label += fee.fee_start_date,
+			// 		chartLabel.push(label)
+			// 	)
+			// );
 		}
-		else { // 월별로 출력
-			feeData.length !== 0 &&
-			feeData.map(
-				(fee) => (
-					(totalIncome += fee.fee_day),
-					chartData.push(fee.fee_day),
-					console.log(fee.fee_date),
-					chartLabel.push(fee.fee_date)
-				)
-			);
+		else if(usePeriod === 'month') { // 월별로 출력
+			if(feeData.length !== 0) {
+				for(var i = 0 ; i < feeData.length ; i++) {
+					totalIncome += feeData[i].fee_day;
+					chartData.push(feeData[i].fee_day);
+					// chartLabel.push(feeData[i].fee_start_date);
+					
+					feeData[i].fee_date.substring(8, 10) === '01' ?
+					chartLabel.push(feeData[i].fee_date.substring(0, 7))
+					:
+					chartLabel.push(feeData[i].fee_date.substring(0, 10))
+				}
+			}
+
+			// feeData.length !== 0 &&
+			// feeData.map(
+			// 	(fee) => (
+			// 		(totalIncome += fee.fee_day),
+			// 		chartData.push(fee.fee_day),
+			// 		// console.log(fee.fee_date),
+			// 		chartLabel.push(fee.fee_date + '')
+			// 		fee.fee_date.toISOString().substring(8, 0) === '01' ?
+			// 		chartLabel.push(fee.fee_date.toISOString().substring(0, 7))
+			// 		:
+			// 		chartLabel.push(fee.fee_date)
+			// 	)
+			// );
 		}
 
 
-		feeData.length !== 0 &&
-			feeData.map(
-				(fee) => (
-					(totalIncome += fee.fee_day),
-					chartData.push(fee.fee_day),
-					// console.log(typeof fee.fee_day),
-					chartLabel.push(fee.fee_date)
-				)
-			);
+		// feeData.length !== 0 &&
+		// 	feeData.map(
+		// 		(fee) => (
+		// 			(totalIncome += fee.fee_day),
+		// 			chartData.push(fee.fee_day),
+		// 			// console.log(typeof fee.fee_day),
+		// 			chartLabel.push(fee.fee_date)
+		// 		)
+		// 	);
 
 		// console.log(totalIncome);
 		// console.log(chartData);
@@ -259,27 +286,32 @@ const Income = () => {
 		const periodText = e.target.value;
 		const period = setPeriod(periodText);
 		const start = new Date(new Date() - 1000 * 60 * 60 * 24 * period);
+		console.log(period+'일 전부터');
 		setStartDate(start);
 		setEndDate(new Date());
 		refStart.current.value = start.toISOString().substring(0, 10);
-		refEnd.current.value = new Date().toISOString().substring(0, 10);
+		refEnd.current.value = new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10);
 
 		// var dateDifference = (new Date() - start) / 1000 * 60 * 60 * 24;
 		// console.log(dateDifference);
 
 		if(period === 7 || period === 30) {
 			setUsePeriod('day');
+			getAdminFeeGraph(setFeeData, start, endDate);
 		}
-		else if(period === 180) {
+		else if(period == 180) {
 			setUsePeriod('week');
+			console.log('dfdfdfae')
+			getFeeDataLabeledByWeek(setFeeData, start, endDate);
 		}
 		else {
 			setUsePeriod('month');
+			getFeeDataLabeledByMonth(setFeeData, start, endDate);
 		}
 
 		// if문 넣고 날짜 차수에 따라 다른 api 쓰기
 		
-		getAdminFeeGraph(setFeeData, start, new Date());
+		// getAdminFeeGraph(setFeeData, start, new Date());
 	};
 
 	// startTime과 endTime 사이 시간 계산
@@ -322,18 +354,25 @@ const Income = () => {
 		// console.log("끝 : " + endDate);
 
 		//////
-		if(getIntervalStartEnd(startDate , endDate) <= 31){
+		if(getIntervalStartEnd(refStart.current.value , refEnd.current.value) <= 32){
 			setUsePeriod('day');
+			console.log('getIntervalStartEnd');
+			getAdminFeeGraph(setFeeData, startDate, endDate);
 		}
-		else if(32 <= getIntervalStartEnd(startDate , endDate) && getIntervalStartEnd(startDate , endDate) <= 180) {
+		else if(32 <= getIntervalStartEnd(refStart.current.value , refEnd.current.value)
+			&& getIntervalStartEnd(refStart.current.value , refEnd.current.value) <= 180) {
 			setUsePeriod('week');
+			console.log('getIntervalStartEnd');
+			getFeeDataLabeledByWeek(setFeeData, startDate, endDate);
 		}
 		else {
 			setUsePeriod('month');
+			console.log('getIntervalStartEnd');
+			getFeeDataLabeledByMonth(setFeeData, startDate, endDate);
 		}
 
-		getAdminFeeGraph(setFeeData, startDate, endDate);
-		// setStartDate(start);
+		// getAdminFeeGraph(setFeeData, startDate, endDate);
+		setStartDate(start);
 	};
 
 	// const getSelectedPeriod = (e) => {
@@ -349,6 +388,10 @@ const Income = () => {
 		// console.log('변경하고 싶은 요금 : ' + refFee.current.value);
 		setAdminFee(setFee, refFee.current.value);
 	};
+
+	const setFeeFormat = (total) => {
+		return total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 
 	return (
@@ -402,8 +445,8 @@ const Income = () => {
 							onChange={handleChangeDate}
 							type='date'
 							min={startDate.toISOString().substring(0, 10)}
-							max={new Date().toISOString().substring(0, 10)}
-							defaultValue={new Date().toISOString().substring(0, 10)}
+							max={new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10)}
+							defaultValue={new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10)}
 						/>
 						&nbsp;
 						{/* <input 
@@ -445,7 +488,7 @@ const Income = () => {
 					</div>
 				</div>
 				<div className='income'>
-					총 수입 {total}원 &nbsp;
+					총 수입 {setFeeFormat(total)}원 &nbsp;
 					<button className='setFee_Btn' onClick={openModal}>요금설정</button>
 					</div>
 {/* 				
