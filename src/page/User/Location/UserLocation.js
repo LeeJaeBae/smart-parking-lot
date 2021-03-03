@@ -54,7 +54,7 @@ const MyCar = () => {
 		var entryTime = new Date(entryTime);
 		var nowTime = new Date();
 		var Interval = nowTime - entryTime;
-		var elapsedHours = Math.floor(Interval / (1000 * 60 * 60));
+		var elapsedHours = Math.floor(Interval / (1000 * 60 * 60) + 1);
 		var nowFee = elapsedHours * fee;
 
 		nowFee = nowFee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");

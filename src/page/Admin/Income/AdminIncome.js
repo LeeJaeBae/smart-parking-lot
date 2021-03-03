@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2'; // chart.js import
-import { getAdminFeeGraph , setAdminFee , getFee } from '../../../api/admin';
+import { getAdminFeeGraph, setAdminFee, getFee } from '../../../api/admin';
 // import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
 import './admin_income.css';
+import useModal from '../../../template/modal/useModal';
 
 // import chart from './IncomeChart';
 // import { data } from './IncomeChart';
@@ -24,15 +25,12 @@ import './admin_income.css';
 // 필요한 배열 : 각 날짜별 요금 총합 배열(data), 날짜 배열(label), 
  */
 
-
-
-
 ////////////////////////
 
 const Income = () => {
-
-	const [chartDataList , setChartDataList] = useState([]); // 차트 데이터 배열
+	const [chartDataList, setChartDataList] = useState([]); // 차트 데이터 배열
 	const [chartLabelList, setChartLabelList] = useState([]);
+	const [openModal, closeModal, Modal] = useModal();
 
 	const chartData = [];
 	const chartLabel = [];
@@ -41,10 +39,10 @@ const Income = () => {
 	const refStart = useRef();
 
 	const refFee = useRef();
-	const [fee , setFee] = useState(1000);
+	const [fee, setFee] = useState(1000);
 	// 차트
 	// const drawChart = (period) => {
-	// 	// feeData.length > 0 ? 
+	// 	// feeData.length > 0 ?
 
 	// 	switch (period) {
 	// 		case 7 : // 일주일
@@ -60,12 +58,12 @@ const Income = () => {
 	// 			period = 1;
 	// 	}
 
-
 	// }
-	
-	const options = { // 차트의 옵션
-		maintainAspectRatio : true, // 차트 크기를 상위 div에 구속?
-		responsive : true, // 차트의 크기 자동조절?
+
+	const options = {
+		// 차트의 옵션
+		maintainAspectRatio: true, // 차트 크기를 상위 div에 구속?
+		responsive: true, // 차트의 크기 자동조절?
 		// tooltips: {
 		// 	mode: 'index',
 		// 	intersect: false,
@@ -80,12 +78,13 @@ const Income = () => {
 			],
 		},
 	};
-	
+
 	// 	// false : 사용자 정의 크기에 따라 그래프 크기가 결정됨.
 	// 	// true : 크기가 알아서 결정됨.
 	// 	maintainAspectRatio: false
-	
-	const data = { // 차트 내 데이터, 라벨, 스타일 등
+
+	const data = {
+		// 차트 내 데이터, 라벨, 스타일 등
 		labels: chartLabelList,
 		datasets: [
 			{
@@ -96,11 +95,10 @@ const Income = () => {
 				borderColor: 'rgba(255, 138, 0, 0.3)',
 				borderWidth: 2,
 				pointRadius: 2,
-				lineTension:0
+				lineTension: 0,
 			},
 		],
 	};
-
 
 	var start = new Date();
 	const [endDate, setEndDate] = useState(new Date());
@@ -108,83 +106,116 @@ const Income = () => {
 	// const [startDate, setStartDate] = useState(new Date());
 
 	const [feeData, setFeeData] = useState([]);
-	const [usePeriod , setUsePeriod] = useState('week');
+	const [usePeriod, setUsePeriod] = useState('day');
 	const [total, setTotal] = useState(0);
 	var totalIncome = 0;
-
 
 	// 최초 데이터 로드
 	useEffect(() => {
 		getFee(setFee);
 		handleGetData();
 		// console.log('요금 받아왔음');
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		// getFee(setFee);
 		// handleGetData();
 		// console.log('요금 받아왔음');
-		refFee.current.value = fee;
-	}, [fee])
-
+		// refFee.current.value = fee;
+	}, [fee]);
 
 	useEffect(() => {
 		// console.log(feeData);
 		// setTotal(0);
-
+		
+		var label = null;
 		// map을 이용해 데이터(총 요금)&라벨(날짜) 배열에 추가
-		feeData.length !== 0 && feeData.map((fee) => (
-			totalIncome += fee.fee_day,
-			chartData.push(fee.fee_day),
-			console.log(typeof(fee.fee_day)),
-			chartLabel.push(fee.fee_date)
-			));
+		if(usePeriod === 'day') { // 일별로 출력
+			feeData.length !== 0 &&
+			feeData.map(
+				(fee) => (
+					(totalIncome += fee.fee_day),
+					chartData.push(fee.fee_day),
+					// console.log(typeof fee.fee_day),
+					chartLabel.push(fee.fee_date)
+				)
+			);
+		}
+		else if(usePeriod === 'week') { // 주별로 출력
+			feeData.length !== 0 &&
+			feeData.map(
+				(fee) => (
+					(totalIncome += fee.fee_day),
+					chartData.push(fee.fee_day),
+					// console.log(typeof fee.fee_day),
+					label += fee.fee_start_date+'~<br/>'+fee.fee_end_date,
+					chartLabel.push(label)
+				)
+			);
+		}
+		else { // 월별로 출력
+			feeData.length !== 0 &&
+			feeData.map(
+				(fee) => (
+					(totalIncome += fee.fee_day),
+					chartData.push(fee.fee_day),
+					console.log(fee.fee_date),
+					chartLabel.push(fee.fee_date)
+				)
+			);
+		}
+
+
+		feeData.length !== 0 &&
+			feeData.map(
+				(fee) => (
+					(totalIncome += fee.fee_day),
+					chartData.push(fee.fee_day),
+					// console.log(typeof fee.fee_day),
+					chartLabel.push(fee.fee_date)
+				)
+			);
 
 		// console.log(totalIncome);
 		// console.log(chartData);
 		// console.log(chartLabel);
 
 		// 차트데이터 날짜 오름차순으로 정렬
-		for(var a = 0 ; a < chartLabel.length ; a++) {
-			for(var b = a+1 ; b < chartLabel.length ; b++) {
-				// console.log(typeof(chartData[a]));
-				if(new Date(chartLabel[a]) > new Date(chartLabel[b])) {
+		// for (var a = 0; a < chartLabel.length; a++) {
+		// 	for (var b = a + 1; b < chartLabel.length; b++) {
+		// 		// console.log(typeof(chartData[a]));
+		// 		if (new Date(chartLabel[a]) > new Date(chartLabel[b])) {
+		// 			var tmp = chartLabel[a];
+		// 			chartLabel[a] = chartLabel[b];
+		// 			chartLabel[b] = tmp;
 
-					var tmp = chartLabel[a];
-					chartLabel[a] = chartLabel[b];
-					chartLabel[b] = tmp;
+		// 			tmp = chartData[a];
+		// 			chartData[a] = chartData[b];
+		// 			chartData[b] = tmp;
 
-					tmp = chartData[a];
-					chartData[a] = chartData[b];
-					chartData[b] = tmp;
-
-					console.log(new Date(chartData[a]));
-					console.log(chartLabel[a]);
-				}
-			}
-		}
+		// 			console.log(new Date(chartData[a]));
+		// 			console.log(chartLabel[a]);
+		// 		}
+		// 	}
+		// }
 
 		setTotal(totalIncome);
 		setChartDataList(chartData);
 		setChartLabelList(chartLabel);
 	}, [feeData]);
 
-
-
 	// input date 값 변경하기
 	const handleChangeDate = (e) => {
 		console.log('input date : ' + e.target.value);
 
-		if(e.target === refStart.current) {
+		if (e.target === refStart.current) {
 			setStartDate(new Date(e.target.value));
-		}
-		else {
+		} else {
 			setEndDate(new Date(e.target.value));
 		}
 
-
 		// if(e.target === refEnd.curren)
-	}
+	};
 
 	// if(feeData.length > 0) { // 차트 데이터와 라벨 지정
 	// 	chartData.push(feeData.map((fee) => (fee.fee_day)));
@@ -208,15 +239,15 @@ const Income = () => {
 			case '1month':
 				period = 30;
 				break;
-			case '3month':
-				period = 90;
-				break;
+			// case '3month':
+			// 	period = 90;
+			// 	break;
 			case '6month':
 				period = 180;
 				break;
 			case 'year':
 				period = 365;
-				break;				
+				break;
 			default:
 				period = 7;
 		}
@@ -232,9 +263,32 @@ const Income = () => {
 		setEndDate(new Date());
 		refStart.current.value = start.toISOString().substring(0, 10);
 		refEnd.current.value = new Date().toISOString().substring(0, 10);
+
+		// var dateDifference = (new Date() - start) / 1000 * 60 * 60 * 24;
+		// console.log(dateDifference);
+
+		if(period === 7 || period === 30) {
+			setUsePeriod('day');
+		}
+		else if(period === 180) {
+			setUsePeriod('week');
+		}
+		else {
+			setUsePeriod('month');
+		}
+
+		// if문 넣고 날짜 차수에 따라 다른 api 쓰기
+		
 		getAdminFeeGraph(setFeeData, start, new Date());
 	};
 
+	// startTime과 endTime 사이 시간 계산
+	const getIntervalStartEnd = (startDate, endDate) => {
+		var Interval = new Date(endDate) - new Date(startDate);
+		var elapsedDays = Interval / (1000 * 60 * 60 * 24); // 며칠 차이나는지 구하기
+
+		return elapsedDays;
+	}
 
 	// 기간선택 & 데이터 가져오기 - 라디오
 	const handleGetData = (e) => {
@@ -262,122 +316,78 @@ const Income = () => {
 		// console.log(endDate);
 		// console.log(Period);
 
-
 		// start = new Date(endDate - 1000 * 60 * 60 * 24 * Period); //
 
 		// console.log("시작 : " + start);
 		// console.log("끝 : " + endDate);
 
-
 		//////
+		if(getIntervalStartEnd(startDate , endDate) <= 31){
+			setUsePeriod('day');
+		}
+		else if(32 <= getIntervalStartEnd(startDate , endDate) && getIntervalStartEnd(startDate , endDate) <= 180) {
+			setUsePeriod('week');
+		}
+		else {
+			setUsePeriod('month');
+		}
 
-		
 		getAdminFeeGraph(setFeeData, startDate, endDate);
 		// setStartDate(start);
-	}
+	};
 
-	const getSelectedPeriod = (e) => {
-		console.log('현재 선택 기간 : ' + e.target.value);
-		console.log('test : '+endDate);
+	// const getSelectedPeriod = (e) => {
+	// 	console.log('현재 선택 기간 : ' + e.target.value);
+	// 	console.log('test : ' + endDate);
 
-		setUsePeriod(e.target.value);
-	}
+	// 	setUsePeriod(e.target.value);
+	// };
 
 	// 요금 변경
 	const handleSetFee = () => {
 		setFee(refFee.current.value);
 		// console.log('변경하고 싶은 요금 : ' + refFee.current.value);
-		setAdminFee(setFee , refFee.current.value);
-	}
-	
-	// //////모달창
-	const modalOpen = () => {
-		document.querySelector('.modal').classList.remove('hidden');
-	}
-	const modalClose = () => {
-		document.querySelector('.modal').classList.add('hidden');
-	}
-
-	// document.querySelector('.openModal').addEventListener('click', modalOpen);
-	// document.querySelector('.close_btn').addEventListener('click', modalClose);
-	// document.querySelector('.modal_background').addEventListener('click', modalClose);
-	
+		setAdminFee(setFee, refFee.current.value);
+	};
 
 
 	return (
 		<>
-{/* 
-		<div className="modal_background">
-				<div className="modal hidden">
-					<div className="close">
-						<button onClick={modalClose} className="close_btn">×</button>
-					</div>
-					<div className="modal_contents">
-						<table>
-							<tr>
-								<th>구역</th>
-								<th>차번호</th>
-								<th>입차시각</th>
-								<th>현재요금</th>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>
-									<input className="input_numberPlate" type="text" value="83무1604"/>
-								</td>
-								<td>15:03</td>
-								<td>6,000</td>
-							</tr>
-						</table>
-						<br/>
-						<div>
-							<button>수정하기</button>
-						</div>
-					</div>
-				</div>
-			</div>
- */}
-
-
-
-
-
-
 			{/* 기간 설정 */}
 			<div className='period_income'>
 				<div className='setPeriod'>
 					<div className='income_form'>
 						{/* 지정 날짜 기간 계산해서 넘기기 */}
 						<button
-						className='income_searchbtn'
-						onClick={handleGetDataBtn}
-						value='week'
-						name='period'>
-						일주일
+							className='income_searchbtn'
+							onClick={handleGetDataBtn}
+							value='week'
+							name='period'>
+							일주일
 						</button>
 						<button
-						className='income_searchbtn'
-						onClick={handleGetDataBtn}
-						value='1month'
-						name='period'>
-						1개월
+							className='income_searchbtn'
+							onClick={handleGetDataBtn}
+							value='1month'
+							name='period'>
+							1개월
 						</button>
 						<button
-						className='income_searchbtn'
-						onClick={handleGetDataBtn}
-						value='6month'
-						name='period'>
-						6개월
+							className='income_searchbtn'
+							onClick={handleGetDataBtn}
+							value='6month'
+							name='period'>
+							6개월
 						</button>
 						<button
-						className='income_searchbtn'
-						onClick={handleGetDataBtn}
-						value='year'
-						name='period'>
-						1년
+							className='income_searchbtn'
+							onClick={handleGetDataBtn}
+							value='year'
+							name='period'>
+							1년
 						</button>
 						<span className='date_standard'>기간</span>
-						<input 
+						<input
 							className='income_datebox'
 							ref={refStart}
 							onChange={handleChangeDate}
@@ -385,8 +395,8 @@ const Income = () => {
 							max={endDate.toISOString().substring(0, 10)}
 							defaultValue={startDate.toISOString().substring(0, 10)}
 						/>
-						 ~&nbsp;&nbsp;
-						<input 
+						~&nbsp;&nbsp;
+						<input
 							className='income_datebox'
 							ref={refEnd}
 							onChange={handleChangeDate}
@@ -425,38 +435,40 @@ const Income = () => {
 						name="period" 
 						value="year"/>1년
 						&nbsp;&nbsp; */}
-
-						<input 
-							className="income_searchbtn"
-							onClick={handleGetData} 
-							type='button' 
+						<input
+							className='income_searchbtn'
+							onClick={handleGetData}
+							type='button'
 							value='조회'
 						/>
 						{/* <button className='openModal' onClick={modalOpen}>요금 변경</button> */}
 					</div>
 				</div>
-				<div className='income'>총 수입 {total}원</div>
-				<br />
+				<div className='income'>
+					총 수입 {total}원 &nbsp;
+					<button className='setFee_Btn' onClick={openModal}>요금설정</button>
+					</div>
+{/* 				
+				<br /> */}
 			</div>
 			{/* 차트 */}
 			<div className='chart'>
-				{feeData.length > 0 ?
-				<Line
-				id='test' 
-				data={data} 
-				options={options} 
-				/>
-				:
-				<>데이터가 없습니다</>
-			}
+				{feeData.length > 0 ? (
+					<Line id='test' data={data} options={options} />
+				) : (
+					<>데이터가 없습니다</>
+				)}
 			</div>
 			{/* 요금 설정 */}
-			<div className='setFee'>
-				현재 요금은 시간당 {fee}원 이며,&nbsp;&nbsp;
-				<input type='number' ref={refFee} defaultValue={fee}/>
-				원으로 변경합니다.
-				&nbsp;&nbsp;&nbsp;<button onClick={handleSetFee}>설정</button>
-			</div>
+			<Modal>
+				<div className='setFee'>
+					현재 요금은 시간당 {fee}원 이며,&nbsp;&nbsp;
+					<input type='number' ref={refFee} defaultValue={fee} />
+					원으로 변경합니다. &nbsp;&nbsp;&nbsp;
+					<br />
+					<button onClick={handleSetFee}>설정</button>
+				</div>
+			</Modal>
 		</>
 	);
 };
