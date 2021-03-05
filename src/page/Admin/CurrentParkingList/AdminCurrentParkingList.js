@@ -3,6 +3,8 @@ import { getAdminParkingListSearch , getFee } from '../../../api/admin';
 import {isBefore} from 'validator'
 import './admin_currentPList.css';
 
+import useModal from '../../../template/modal/useModal';
+
 
 const LeftTHstyle = {
 	borderTopLeftRadius: '10px',
@@ -22,8 +24,10 @@ const RightTHstyle = {
 
 const CurrentPList = () => {
 	// 시간당 요금
-	// let fee = 100;
+
+	const refFee = useRef();
 	const [fee , setFee] = useState(1000); // 현재요금
+	
 
 	const refNumberPlate = useRef();
 
@@ -32,7 +36,7 @@ const CurrentPList = () => {
 		var entryTime = new Date(entryTime);
 		var nowTime = new Date();
 		var Interval = nowTime - entryTime;
-		var elapsedHours = Math.floor(Interval / (1000 * 60 * 60));
+		var elapsedHours = Math.floor(Interval / (1000 * 60 * 60) + 1); // 올림
 		var userFee = elapsedHours * fee;
 
 		userFee = userFee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -142,10 +146,10 @@ const CurrentPList = () => {
 								<td>{car.car_number_plate}</td>
 								<td>{car.car_entry_time}</td>
 								<td>{getNowFee(car.car_entry_time, fee)}</td>
-								<td>
+								{/* <td>
 									<input type='hidden' name='car_id' value={car.car_id} />
 									<input className='modify' type='submit' value='수정' />
-								</td>
+								</td> */}
 							</tr>
 						))
 						:
@@ -157,6 +161,15 @@ const CurrentPList = () => {
 					}
 				</table>
 			</div>
+			{/* <useModal>
+				<div className='modifyNumberPlate'>
+					'현재차번호' ▶ &nbsp;&nbsp;
+					<input type='text'/>
+					 &nbsp;&nbsp;&nbsp;
+					<br />
+					<button>완료</button>
+				</div>
+			</useModal> */}
 		</>
 	);
 };

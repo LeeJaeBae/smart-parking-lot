@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2'; // chart.js import
-import { getAdminFeeGraph, setAdminFee, getFee } from '../../../api/admin';
+import { getAdminFeeGraph, getFeeDataLabeledByWeek , getFeeDataLabeledByMonth , setAdminFee, getFee } from '../../../api/admin';
 // import CurrentPList from '../CurrentParkingList/AdminCurrentParkingList';
 import './admin_income.css';
 import useModal from '../../../template/modal/useModal';
@@ -106,7 +106,7 @@ const Income = () => {
 	// const [startDate, setStartDate] = useState(new Date());
 
 	const [feeData, setFeeData] = useState([]);
-	const [usePeriod, setUsePeriod] = useState('week');
+	const [usePeriod, setUsePeriod] = useState('day');
 	const [total, setTotal] = useState(0);
 	var totalIncome = 0;
 
@@ -127,40 +127,104 @@ const Income = () => {
 	useEffect(() => {
 		// console.log(feeData);
 		// setTotal(0);
-
+		console.log('usePeriod : ' + usePeriod);
 		// map을 이용해 데이터(총 요금)&라벨(날짜) 배열에 추가
-		feeData.length !== 0 &&
+		
+		if(usePeriod === 'day') { // 일별로 출력
+			feeData.length !== 0 &&
 			feeData.map(
 				(fee) => (
 					(totalIncome += fee.fee_day),
 					chartData.push(fee.fee_day),
-					console.log(typeof fee.fee_day),
+					// console.log(typeof fee.fee_day),
 					chartLabel.push(fee.fee_date)
 				)
 			);
+		}
+		else if(usePeriod === 'week') { // 주별로 출력
+			if(feeData.length !== 0) {
+				for(var i = 0 ; i < feeData.length ; i++) {
+					var label = '';
+					totalIncome += feeData[i].fee_day;
+					chartData.push(feeData[i].fee_day);
+					label += feeData[i].fee_start_date+'~';
+					label += feeData[i].fee_end_date;
+					chartLabel.push(label);
+				}
+			}
+			// feeData.length !== 0 &&
+			// feeData.map(
+			// 	(fee) => (
+			// 		(totalIncome += fee.fee_day),
+			// 		chartData.push(fee.fee_day),
+			// 		// console.log(typeof fee.fee_day),
+			// 		label += fee.fee_start_date,
+			// 		chartLabel.push(label)
+			// 	)
+			// );
+		}
+		else if(usePeriod === 'month') { // 월별로 출력
+			if(feeData.length !== 0) {
+				for(var i = 0 ; i < feeData.length ; i++) {
+					totalIncome += feeData[i].fee_day;
+					chartData.push(feeData[i].fee_day);
+					// chartLabel.push(feeData[i].fee_start_date);
+					
+					feeData[i].fee_date.substring(8, 10) === '01' ?
+					chartLabel.push(feeData[i].fee_date.substring(0, 7))
+					:
+					chartLabel.push(feeData[i].fee_date.substring(0, 10))
+				}
+			}
+
+			// feeData.length !== 0 &&
+			// feeData.map(
+			// 	(fee) => (
+			// 		(totalIncome += fee.fee_day),
+			// 		chartData.push(fee.fee_day),
+			// 		// console.log(fee.fee_date),
+			// 		chartLabel.push(fee.fee_date + '')
+			// 		fee.fee_date.toISOString().substring(8, 0) === '01' ?
+			// 		chartLabel.push(fee.fee_date.toISOString().substring(0, 7))
+			// 		:
+			// 		chartLabel.push(fee.fee_date)
+			// 	)
+			// );
+		}
+
+
+		// feeData.length !== 0 &&
+		// 	feeData.map(
+		// 		(fee) => (
+		// 			(totalIncome += fee.fee_day),
+		// 			chartData.push(fee.fee_day),
+		// 			// console.log(typeof fee.fee_day),
+		// 			chartLabel.push(fee.fee_date)
+		// 		)
+		// 	);
 
 		// console.log(totalIncome);
 		// console.log(chartData);
 		// console.log(chartLabel);
 
 		// 차트데이터 날짜 오름차순으로 정렬
-		for (var a = 0; a < chartLabel.length; a++) {
-			for (var b = a + 1; b < chartLabel.length; b++) {
-				// console.log(typeof(chartData[a]));
-				if (new Date(chartLabel[a]) > new Date(chartLabel[b])) {
-					var tmp = chartLabel[a];
-					chartLabel[a] = chartLabel[b];
-					chartLabel[b] = tmp;
+		// for (var a = 0; a < chartLabel.length; a++) {
+		// 	for (var b = a + 1; b < chartLabel.length; b++) {
+		// 		// console.log(typeof(chartData[a]));
+		// 		if (new Date(chartLabel[a]) > new Date(chartLabel[b])) {
+		// 			var tmp = chartLabel[a];
+		// 			chartLabel[a] = chartLabel[b];
+		// 			chartLabel[b] = tmp;
 
-					tmp = chartData[a];
-					chartData[a] = chartData[b];
-					chartData[b] = tmp;
+		// 			tmp = chartData[a];
+		// 			chartData[a] = chartData[b];
+		// 			chartData[b] = tmp;
 
-					console.log(new Date(chartData[a]));
-					console.log(chartLabel[a]);
-				}
-			}
-		}
+		// 			console.log(new Date(chartData[a]));
+		// 			console.log(chartLabel[a]);
+		// 		}
+		// 	}
+		// }
 
 		setTotal(totalIncome);
 		setChartDataList(chartData);
@@ -202,9 +266,9 @@ const Income = () => {
 			case '1month':
 				period = 30;
 				break;
-			case '3month':
-				period = 90;
-				break;
+			// case '3month':
+			// 	period = 90;
+			// 	break;
 			case '6month':
 				period = 180;
 				break;
@@ -222,12 +286,41 @@ const Income = () => {
 		const periodText = e.target.value;
 		const period = setPeriod(periodText);
 		const start = new Date(new Date() - 1000 * 60 * 60 * 24 * period);
+		console.log(period+'일 전부터');
 		setStartDate(start);
 		setEndDate(new Date());
 		refStart.current.value = start.toISOString().substring(0, 10);
-		refEnd.current.value = new Date().toISOString().substring(0, 10);
-		getAdminFeeGraph(setFeeData, start, new Date());
+		refEnd.current.value = new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10);
+
+		// var dateDifference = (new Date() - start) / 1000 * 60 * 60 * 24;
+		// console.log(dateDifference);
+
+		if(period === 7 || period === 30) {
+			setUsePeriod('day');
+			getAdminFeeGraph(setFeeData, start, endDate);
+		}
+		else if(period == 180) {
+			setUsePeriod('week');
+			console.log('dfdfdfae')
+			getFeeDataLabeledByWeek(setFeeData, start, endDate);
+		}
+		else {
+			setUsePeriod('month');
+			getFeeDataLabeledByMonth(setFeeData, start, endDate);
+		}
+
+		// if문 넣고 날짜 차수에 따라 다른 api 쓰기
+		
+		// getAdminFeeGraph(setFeeData, start, new Date());
 	};
+
+	// startTime과 endTime 사이 시간 계산
+	const getIntervalStartEnd = (startDate, endDate) => {
+		var Interval = new Date(endDate) - new Date(startDate);
+		var elapsedDays = Interval / (1000 * 60 * 60 * 24); // 며칠 차이나는지 구하기
+
+		return elapsedDays;
+	}
 
 	// 기간선택 & 데이터 가져오기 - 라디오
 	const handleGetData = (e) => {
@@ -261,17 +354,33 @@ const Income = () => {
 		// console.log("끝 : " + endDate);
 
 		//////
+		if(getIntervalStartEnd(refStart.current.value , refEnd.current.value) <= 32){
+			setUsePeriod('day');
+			console.log('getIntervalStartEnd');
+			getAdminFeeGraph(setFeeData, startDate, endDate);
+		}
+		else if(32 <= getIntervalStartEnd(refStart.current.value , refEnd.current.value)
+			&& getIntervalStartEnd(refStart.current.value , refEnd.current.value) <= 180) {
+			setUsePeriod('week');
+			console.log('getIntervalStartEnd');
+			getFeeDataLabeledByWeek(setFeeData, startDate, endDate);
+		}
+		else {
+			setUsePeriod('month');
+			console.log('getIntervalStartEnd');
+			getFeeDataLabeledByMonth(setFeeData, startDate, endDate);
+		}
 
-		getAdminFeeGraph(setFeeData, startDate, endDate);
-		// setStartDate(start);
+		// getAdminFeeGraph(setFeeData, startDate, endDate);
+		setStartDate(start);
 	};
 
-	const getSelectedPeriod = (e) => {
-		console.log('현재 선택 기간 : ' + e.target.value);
-		console.log('test : ' + endDate);
+	// const getSelectedPeriod = (e) => {
+	// 	console.log('현재 선택 기간 : ' + e.target.value);
+	// 	console.log('test : ' + endDate);
 
-		setUsePeriod(e.target.value);
-	};
+	// 	setUsePeriod(e.target.value);
+	// };
 
 	// 요금 변경
 	const handleSetFee = () => {
@@ -280,52 +389,13 @@ const Income = () => {
 		setAdminFee(setFee, refFee.current.value);
 	};
 
-	// //////모달창
-	const modalOpen = () => {
-		document.querySelector('.modal').classList.remove('hidden');
-	};
-	const modalClose = () => {
-		document.querySelector('.modal').classList.add('hidden');
-	};
+	const setFeeFormat = (total) => {
+		return total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}
 
-	// document.querySelector('.openModal').addEventListener('click', modalOpen);
-	// document.querySelector('.close_btn').addEventListener('click', modalClose);
-	// document.querySelector('.modal_background').addEventListener('click', modalClose);
 
 	return (
 		<>
-			{/* 
-		<div className="modal_background">
-				<div className="modal hidden">
-					<div className="close">
-						<button onClick={modalClose} className="close_btn">×</button>
-					</div>
-					<div className="modal_contents">
-						<table>
-							<tr>
-								<th>구역</th>
-								<th>차번호</th>
-								<th>입차시각</th>
-								<th>현재요금</th>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>
-									<input className="input_numberPlate" type="text" value="83무1604"/>
-								</td>
-								<td>15:03</td>
-								<td>6,000</td>
-							</tr>
-						</table>
-						<br/>
-						<div>
-							<button>수정하기</button>
-						</div>
-					</div>
-				</div>
-			</div>
- */}
-
 			{/* 기간 설정 */}
 			<div className='period_income'>
 				<div className='setPeriod'>
@@ -375,8 +445,8 @@ const Income = () => {
 							onChange={handleChangeDate}
 							type='date'
 							min={startDate.toISOString().substring(0, 10)}
-							max={new Date().toISOString().substring(0, 10)}
-							defaultValue={new Date().toISOString().substring(0, 10)}
+							max={new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10)}
+							defaultValue={new Date(new Date() - 1000 * 60 * 60 * 24).toISOString().substring(0, 10)}
 						/>
 						&nbsp;
 						{/* <input 
@@ -417,9 +487,12 @@ const Income = () => {
 						{/* <button className='openModal' onClick={modalOpen}>요금 변경</button> */}
 					</div>
 				</div>
-				<div className='income'>총 수입 {total}원</div>
-				<button onClick={openModal}>요금 설정</button>
-				<br />
+				<div className='income'>
+					총 수입 {setFeeFormat(total)}원 &nbsp;
+					<button className='setFee_Btn' onClick={openModal}>요금설정</button>
+					</div>
+{/* 				
+				<br /> */}
 			</div>
 			{/* 차트 */}
 			<div className='chart'>

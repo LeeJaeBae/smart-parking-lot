@@ -12,7 +12,7 @@
 	height: 80px;
 }
 .income_form {
-	width: 700px;
+	width: 650px;
 }
 .income_btn {
 	width: 60px;
@@ -89,6 +89,11 @@
 	font-size: xx-large;
 	width: 130px;
 	padding-left: 10px;
+}
+
+.setFee_Btn {
+	/* background-image: url('../../../style/img/setting_icon.png');
+	border: none; */
 }
 
 

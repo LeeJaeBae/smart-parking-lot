@@ -15,6 +15,7 @@ export const getAdminLiveSituation = (setState) =>
 
 
 
+
 // 현재 주차중인 차 목록을 최근 입차순으로 세팅
 const sortDataByEntryTime = (json) => {
 	json.sort(function(a,b) { // 입차시각 오래된순
@@ -36,6 +37,11 @@ export const getAdminParkingListSearch = (setState, numberPlate) =>
 	axios.get(`/parkingList`, { params: { numberPlate } }).then((res) => {
 		res.data.parkingList && setState(sortDataByEntryTime(res.data.parkingList));
 	});
+// 차번호 수정
+export const modifyAdminNumberPlate = (numberPlate) =>
+	axios.get(`/liveSituation`).then((res) => {
+		res.data.liveSituation && console.log(res.data.liveSituation);
+});
 
 
 // 현재 요금 가져오기 (income)
@@ -49,15 +55,34 @@ export const getFee = (setState) =>
 
 
 // 수입 조회 (chart.js)
+// 일간 조회
 export const getAdminFeeGraph = (setState, startTime, endTime) =>
 	axios.get(`/feeGraph`, { params: { startTime, endTime } }).then((res) => {
-		setState(res.data.feeList);
+		res.data.feeList &&	setState(res.data.feeList);
 	});
+// 주간 조회
+export const getFeeDataLabeledByWeek = (setState, startTime, endTime) =>
+	axios.get(`/feeGraphWeek`, { params: { startTime, endTime } }).then((res) => {
+		res.data.feeList &&	setState(res.data.feeList);
+	});
+// 월별 조회
+export const getFeeDataLabeledByMonth = (setState, startTime, endTime) =>
+	axios.get(`/feeGraphMonth`, { params: { startTime, endTime } }).then((res) => {
+		res.data.feeList &&	setState(res.data.feeList);
+	});
+
 // 시간당 요금 변경
 export const setAdminFee = (setState, feeInfo) =>
 axios.get(`/feeUpdate`, { params: { feeInfo } }).then((res) => {
 	res.data.feeInfo && setState(res.data.feeInfo);
 });
+
+
+
+
+
+
+
 
 
 
