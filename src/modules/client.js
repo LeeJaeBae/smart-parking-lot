@@ -53,19 +53,19 @@ export function initJanus() {
 									myId = msg['id'];
 									mypvtid = msg['private_id'];
 
-									Janus.log(`${msg['room']}에 성공적으로 접속하였습니다. ID = $ myId}`);
+									Janus.log(`${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`);
 
 									publishOwnFeed(msg);
 								} else if (event === 'event') {
-									let list = msg['publishers'];
-
-									Janus.log('Got a list of available publishers/feeds:', list);
-									for (var f in list) {
-										var id = list[f]['id'];
-										if (id === myId + 2)
-											// createAnswer 제작
-											mobileFeed(id);
-									}
+									// let list = msg['publishers'];
+									// Janus.log('Got a list of available publishers/feeds:', list);
+									// console.log('list@@@@@@@', list);
+									// for (var f in list) {
+									// 	var id = list[f]['id'];
+									// 	if (id === myId + 2)
+									// 		// createAnswer 제작
+									// 		mobileFeed(id);
+									// }
 								}
 							}
 							if (jsep) {
@@ -79,10 +79,12 @@ export function initJanus() {
 						onlocalstream: function (stream) {
 							Janus.debug(' ::: Got a local stream :::', stream);
 							// html tag 값 가져오기
-							let myVideo = document.getElementById('myvideo');
+							let myVideo = document.getElementById('cctv1');
+							let myVideo2 = document.getElementById('cctv2');
 							console.log(myVideo);
 							// tag에 stream data 붙이기
 							Janus.attachMediaStream(myVideo, stream);
+							Janus.attachMediaStream(myVideo2, stream);
 						},
 						oncleanup: function () {},
 					});
@@ -153,7 +155,8 @@ function localScreenFeed(msg) {
 			console.log('onlocalstream(on Screen handle) 실행 !');
 			Janus.debug(' ::: Got a local Screen stream :::', stream);
 			// html tag 값 가져오기
-			let myVideoScreen = document.getElementById('myvideoScreen');
+			console.log(stream);
+			let myVideoScreen = document.getElementById('myvideo');
 			// tag에 stream data 붙이기
 			Janus.attachMediaStream(myVideoScreen, stream);
 		},
@@ -334,7 +337,7 @@ function publishOwnFeed(msg) {
 
 			// localScreenFeed 생성
 			Janus.log(msg['publishers']['id']);
-			localScreenFeed(msg);
+			// localScreenFeed(msg);
 		},
 		error: function (error) {
 			Janus.error('WebRTC error:', error);

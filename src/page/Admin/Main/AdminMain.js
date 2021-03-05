@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminLiveSituation } from '../../../api/admin';
 import { initJanus } from '../../../modules/client';
+import publisher from '../../../modules/publisher';
 import './admin_main.css';
 
 const style = {
@@ -20,6 +21,7 @@ const Main = () => {
 	useEffect(() => {
 		getAdminLiveSituation(setData);
 		initJanus();
+		publisher();
 	}, []);
 	useEffect(() => {
 		console.log(data);
@@ -36,8 +38,16 @@ const Main = () => {
 							<td className='video_label'>출차</td>
 						</tr>
 						<tr>
-							<td className='video'>입차영상</td>
-							<td className='video'>출차영상</td>
+							<td className='video'>
+								<video id='cctv1' autoPlay={true} playsInline={true} muted={'muted'}>
+									test
+								</video>
+							</td>
+							<td className='video'>
+								<video id='cctv2' autoPlay={true} playsInline={true} muted={'muted'}>
+									test
+								</video>
+							</td>
 						</tr>
 						<tr>
 							<td className='video_label' colSpan='2'>
@@ -46,11 +56,12 @@ const Main = () => {
 						</tr>
 						<tr>
 							<td className='video cctv' colSpan='2'>
-								주차장 영상
+								<video id='myvideo' autoPlay={true} playsInline={true} muted={'muted'}>
+									test
+								</video>
 							</td>
 						</tr>
 					</table>
-					<video id='myvideo'>test</video>
 				</div>
 			</div>
 		</>
