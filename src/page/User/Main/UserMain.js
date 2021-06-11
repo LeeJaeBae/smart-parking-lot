@@ -8,7 +8,7 @@ import { Link, Redirect  } from 'react-router-dom';
 import { Route } from '../../../config/routes';
 
 import './user_main.css';
-import userlogo_img from '../../../style/img/user_logo.png';
+import userlogo_img from '../../../style/img/sumaro_circle.png';
 import axios from 'axios';
 
 
@@ -19,7 +19,7 @@ const Background = styled.div`
 
 const UserLogo = styled.div`
 	margin: 0 auto;
-	width: 200px;
+	width: 153px;
 	height: 150px;
 	margin-bottom: 50px;
 	background-image: url(${userlogo_img});
@@ -45,20 +45,12 @@ const UserMain = () => {
 		setSearchText(text.current.value);
 	}
 
-	// const isThereText = (searchText , data) => {
-	// 	if( data != null && searchText !== "" ) {
-	// 		alert("※ 차번호를 찾을 수 없습니다 ");
-	// 		return ( <></> )
-	// 	}
-	// 	else {
-	// 		return ( <></> )
-	// 	}
-	// }
-
-
 
 	return (
 		<Background>
+			<div id='link_to_admin'>
+				<Link to={Route.admin.main}>admin</Link>
+			</div>
 			<UserLogo />
 			<div>
 				<div className='searchbox'>
@@ -78,9 +70,7 @@ const UserMain = () => {
 			<div id='congetion'>
 				<Link to={Route.user.congestion}>주차장 혼잡도 확인하기</Link>
 			</div>
-			<div>
-				<Link to={Route.admin.main}>admin</Link>
-			</div>
+			
 
 		</Background>
 	);

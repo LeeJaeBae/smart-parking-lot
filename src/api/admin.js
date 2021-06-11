@@ -1,5 +1,29 @@
 import axios from './axios';
 import {isBefore} from 'validator'
+// import { useDispatch } from 'react-redux'
+
+
+// 로그인
+export const adminLogin = async ({ id, password }) =>
+	axios.post(`/login` , { params: { id, password } }).then((res) => {
+		console.log(res.data);
+	});
+
+	// if (success) {
+	// 	// Cookies.set('session', token.split(' ')[1]); // 세션을 쿠키에 저장
+
+	// 	props.history.push('/user'); // 화면 전환
+	// }
+	// return data;
+
+// 로그아웃
+// export const signout = async session => {
+// 	const headers = {
+// 		Authorization: `jwt ${session}`
+// 	}
+
+// 	const { data } = await axios.get('' , { })
+// }
 
 /**
  * getLiveSituation
@@ -54,6 +78,7 @@ export const getFee = (setState) =>
 
 
 
+
 // 수입 조회 (chart.js)
 // 일간 조회
 export const getAdminFeeGraph = (setState, startTime, endTime) =>
@@ -73,16 +98,9 @@ export const getFeeDataLabeledByMonth = (setState, startTime, endTime) =>
 
 // 시간당 요금 변경
 export const setAdminFee = (setState, feeInfo) =>
-axios.get(`/feeUpdate`, { params: { feeInfo } }).then((res) => {
+	axios.get(`/feeUpdate`, { params: { feeInfo } }).then((res) => {
 	res.data.feeInfo && setState(res.data.feeInfo);
 });
-
-
-
-
-
-
-
 
 
 

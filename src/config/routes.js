@@ -11,6 +11,8 @@ export class Route {
 		main: '/',
 		congestion: '/congestion',
 		location: '/location',
-		error: '/error'
+		error: '/error',
+		payready: '/payready',
+		payresult : '/payresult'
 	};
 }

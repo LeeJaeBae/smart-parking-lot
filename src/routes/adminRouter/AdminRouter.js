@@ -22,9 +22,9 @@ function AdminRouter() {
 			<Route exact path='/admin/alldata'>
 				<AdminAllParkingData />
 			</Route>
-			{/* <Route path='/admin/login'>
+			<Route path='/admin/login'>
 				<AdminLogin/>
-			</Route> */}
+			</Route>
 		</>
 	);
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인페이지</title>
+
+    <style>
+        * {
+            margin: 0 auto;
+            text-align: center;
+        }
+        #login_background {
+            width: 1280px;
+            height: 800px;
+            padding-top: 100px;
+        }
+        #login_logo {
+            width:  600px;
+            height: 120px;
+            margin-bottom: 150px;
+            background-image: url("../../../style/img/sumaro_text.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #login_explain {
+            margin-bottom: 30px;
+            font-size: xx-large;
+            font-family: serif;
+        }
+
+        .admin_loginbox {
+            height: 40px;
+            width: 300px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            border: solid 1px gray;
+            font-size: larger;
+        }
+        .admin_loginbox:focus {
+            outline: none;
+        }
+
+        #admin_login {
+            height: 45px;
+            width: 308px;
+            border-radius: 20px;
+            border: solid 1px #0066FF;
+            background-color: #0066FF;
+            color: white;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <div id='login_background'>
+        <div id="login_logo"></div>
+        <div id='login_explain'>
+            Sumalo Administrator
+        </div>
+        <div id="login_box">
+            <input class="admin_loginbox" type="text"><br>
+            <input class="admin_loginbox" type="password"><br>
+            <button id="admin_login">LOGIN</button>
+        </div>
+    </div>
+</body>
+</html>
