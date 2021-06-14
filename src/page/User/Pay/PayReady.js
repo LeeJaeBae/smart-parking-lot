@@ -39,7 +39,7 @@ class PayReady extends React.Component {
       // console.log(next_redirect_pc_url);
       console.log(tid);
       // localstorage에 tid 저장
-	  window.localStorage.setItem("tid", tid);
+	    window.localStorage.setItem("tid", tid);
       this.setState({ next_redirect_mobile_url, tid }); // 모바일 웹일 경우 next_redirect_mobile_url
     });
   }

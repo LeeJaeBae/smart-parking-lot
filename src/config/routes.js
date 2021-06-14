@@ -1,10 +1,11 @@
 export class Route {
 	static admin = {
-		main: '/admin',
+		login: '/admin',
+		main: '/admin/main',
 		allParkingData: '/admin/alldata',
 		currentParkingList: '/admin/current',
 		Income: '/admin/income',
-		logout: 'logout'
+		// logout: 'logout'
 	};
 
 	static user = {

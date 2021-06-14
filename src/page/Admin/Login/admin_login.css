@@ -25,23 +25,37 @@
 }
 
 .admin_loginbox {
-    height: 40px;
+    height: 43px;
     width: 300px;
     margin-bottom: 10px;
+    padding-left: 15px;
     border-radius: 20px;
     border: solid 1px gray;
     font-size: larger;
+    text-align: left;
 }
+.admin_loginbox::placeholder {
+    color: rgb(195, 195, 195);
+  }
+
+
 .admin_loginbox:focus {
     outline: none;
+
 }
 
-#admin_login {
+
+
+
+#admin_loginbtn {
     height: 45px;
-    width: 308px;
+    width: 305px;
     border-radius: 20px;
     border: solid 1px #0066FF;
     background-color: #0066FF;
     color: white;
     font-size: large;
+}
+#admin_loginbtn:hover {
+    cursor: pointer;
 }

@@ -5,6 +5,18 @@ import { Link } from 'react-router-dom';
 import { Route } from '../../config/routes';
 
 const Menu = ({ setTitle }) => {
+
+
+	// 로그아웃 
+	const logout = () => {
+		// sessionStorage 에 user_id 로 저장되어 있는 아이템 삭제
+		sessionStorage.removeItem('user_id');
+
+		// 로그인 화면으로 이동
+		document.location.href = "/admin"; 
+	};
+
+
 	return (
 		<>
 			<div id='menu_bar'>
@@ -31,8 +43,8 @@ const Menu = ({ setTitle }) => {
 						</div>
 					</Link>
 				</div>
-				<div id={Route.admin.logout}>
-					<a href='로그아웃'>Logout</a>
+				<div>
+					<a onClick={logout}>Logout</a>
 				</div>
 			</div>
 		</>

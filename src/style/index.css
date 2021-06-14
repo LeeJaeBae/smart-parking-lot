@@ -9,3 +9,11 @@ body {
 	margin: 0 auto;
 	text-align: center;
 }
+
+input[type=password] {
+	font-family: 'NanumBarunGothic';
+}
+
+input[type=text] {
+	font-family: 'NanumBarunGothic';
+}

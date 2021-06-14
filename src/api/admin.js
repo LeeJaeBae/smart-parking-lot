@@ -1,13 +1,39 @@
 import axios from './axios';
 import {isBefore} from 'validator'
+
+
 // import { useDispatch } from 'react-redux'
 
 
 // 로그인
-export const adminLogin = async ({ id, password }) =>
-	axios.post(`/login` , { params: { id, password } }).then((res) => {
-		console.log(res.data);
-	});
+export const adminLogin = async ({ input_id, input_pw }) => {
+		axios.post(`/login`, null, {
+			params: {
+				'user_id' : input_id,
+				'user_pw' : input_pw
+			}
+		})
+		.then((res) => {
+			console.log(res);
+			console.log('res.data.userId :: ', res.data.userId);
+            console.log('res.data.msg :: ', res.data.msg);
+			//
+			if(res.data.userId === undefined || res.data.userId === null) {
+				console.log(res.data.msg)  // 이건 예외처리에서
+				alert('없는 아이디이거나, 잘못된 비밀번호 입니다.')
+			}
+			else if(res.data.userId === input_id) {
+				console.log('로그인 성공!')
+				sessionStorage.setItem('user_id', input_id)
+			}
+			//
+			document.location.href = "/admin/main"; // 로그인되면 관리자 페이지로 이동
+		  })
+		  .catch((error) => {
+			console.log(error);
+		  });
+}
+	
 
 	// if (success) {
 	// 	// Cookies.set('session', token.split(' ')[1]); // 세션을 쿠키에 저장

@@ -49,7 +49,7 @@ const UserMain = () => {
 	return (
 		<Background>
 			<div id='link_to_admin'>
-				<Link to={Route.admin.main}>admin</Link>
+				<Link to={Route.admin.login}>admin</Link>
 			</div>
 			<UserLogo />
 			<div>

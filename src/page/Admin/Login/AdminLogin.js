@@ -1,5 +1,6 @@
 import React , { useState , useEffect, useRef } from 'react';
 import { adminLogin } from '../../../api/admin';
+import { Dispatch } from 'react';
 // import { setAdminLogin } from '../../../api/admin';
 import styled from 'styled-components';
 
@@ -28,35 +29,17 @@ const AdminLogin = ( props ) => { // 파라미터로 props 넣어줘야 로그�
     const [adminid, setAdminid] = useState("");
     const [adminpw, setAdminpw] = useState("");
 
-    // useEffect(() => {
-    //     setAdminid(id);
-    // }, [id]);
 
-    // const onIdHandler = (e) => {
-    //     setAdminid(e.current.value);
-    // }
-
-    // const onPwHandler = (e) => {
-    //     setAdminpw(e.current.value);
-    // }
-
-    // const onSubmitHandler = (e) => {
-    //     e.preventDefault();
-
-    // }
- 
     const [userInfo, setUserInfo] = useState(""); // 유저 정보 저장
 
-	const handleSubmit = (e) =>{
-
-
-        if(adminid !== "" && adminpw !== "") {
-            alert('제대로해..');
-            AdminLogin(adminid, adminpw);
+	const handleLogin = (e) =>{
+        // 값 유효성 체크
+        if(adminid === "" || adminpw === "") {
+            window.alert("아이디와 비밀번호를 입력해주세요");
+            return;
         }
-        else {
-            alert("아이디 또는 비밀번호를 입력하세요");
-        }
+
+        adminLogin(adminid, adminpw);
 	}
 
     const handleIDChange = (e) => {
@@ -107,7 +90,7 @@ const AdminLogin = ( props ) => { // 파라미터로 props 넣어줘야 로그�
                 onChange={handlePWChange}
                 placeholder='PW'
             /><br/>
-            <button onClick={handleSubmit} id="admin_login">LOGIN</button>
+            <button type='button' onClick={handleLogin} id="admin_loginbtn">LOGIN</button>
         </div>
         </div>
 		</Background>

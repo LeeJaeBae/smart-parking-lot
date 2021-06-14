@@ -21,7 +21,7 @@ const Background = styled.div`
 const User_logo = styled.div`
 	margin: 0 auto;
 	width: 120px;
-	height: 90px;
+	height: 120px;
 	margin-bottom: 30px;
 	background-image: url(${userlogo_img});
 	background-size: contain;
@@ -99,6 +99,69 @@ const MyCar = () => {
 
 		// console.log(payResult.tid);
 	}
+	// var param = {
+	// 	next_redirect_pc_url: "",
+	// 	tid: "",
+		
+	// 	  cid: "TC0ONETIME",
+	// 	  partner_order_id: "partner_order_id",
+	// 	  partner_user_id: "partner_user_id",
+	// 	  item_name: "스마로",
+	// 	  quantity: 1,
+	// 	  total_amount: 100,
+	// 	  vat_amount: 10,
+	// 	  tax_free_amount: 0,
+	// 	  // router에 지정한 PayResult의 경로로 수정
+	// 	  approval_url: "http://localhost:3000/payresult",
+	// 	  fail_url: "http://localhost:3000/payresult",
+	// 	  cancel_url: "http://localhost:3000/payresult",
+		
+	//   }
+
+	// const [parameter , setParameter ] =  useState({
+	// 	// next_redirect_mobile_url: "",
+	// 	// tid: "",
+	// 	// params: {
+	// 	  cid: "TC0ONETIME",
+	// 	  partner_order_id: "partner_order_id",
+	// 	  partner_user_id: "partner_user_id",
+	// 	  item_name: "스마로",
+	// 	  quantity: 1,
+	// 	  total_amount: 100,
+	// 	  vat_amount: 10,
+	// 	  tax_free_amount: 0,
+	// 	  // router에 지정한 PayResult의 경로로 수정
+	// 	  approval_url: "http://localhost:3000/payresult",
+	// 	  fail_url: "http://localhost:3000/payresult",
+	// 	  cancel_url: "http://localhost:3000/payresult",
+	// 	// }
+	//   });
+
+	// useEffect (()=> {
+	// 	const param = parameter;
+	// 	console.log(param);
+	// 	axios({
+	// 		url: "/v1/payment/ready",
+	// 		method: "POST",
+	// 		headers: {
+	// 		  Authorization: "KakaoAK 61ba2289c1c4f8b0fb0f53eb2ae8cf41", // admin 키
+	// 		  "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+	// 		},
+	// 		parameter,
+	// 	  }).then((response) => {
+	// 		const {
+	// 		  data: { next_redirect_mobile_url, tid },
+	// 		} = response;
+	  
+	// 		// console.log(next_redirect_pc_url);
+	// 		console.log('tid : ' + tid);
+	// 		// localstorage에 tid 저장
+	// 		window.localStorage.setItem("tid", tid);
+	// 		setData({ next_redirect_mobile_url, tid }); // 모바일 웹일 경우 next_redirect_mobile_url
+	// 	  });
+	// }, []);
+
+	// console.log(data);
 
 
 	return (
