@@ -12,6 +12,7 @@
 	background-image: url('../../style/img/sumaro_circle.png');
 	background-size: contain;
 	background-repeat: no-repeat;
+	text-align: center;
 }
 #menu_name {
 	padding-top: 25px;
@@ -33,6 +34,8 @@
 	padding: 15px 15px 15px 15px;
 	color: #3b3b3b;
 	font-size: large;
+	text-align: left;
+	padding-left: 10px;
 }
 .menu:hover {
 	background-color: #0066FF;
@@ -43,6 +46,17 @@
 	color: white;
 }
 
+#admin_set_btn {
+	position: absolute;
+	bottom: 90px;
+	color: #999999;
+	text-align: left;
+	margin-left: 30px;
+}
+#admin_set_btn:hover {
+	cursor: pointer;
+}
+
 #logout {
 	position: absolute;
 	bottom: 50px;
@@ -50,6 +64,12 @@
 	text-align: left;
 	margin-left: 30px;
 }
+#logout:hover {
+	cursor: pointer;
+}
+
+
+
 a {
 	text-decoration: none;
 }
@@ -58,4 +78,53 @@ a:link {
 }
 a:visited {
 	color: #999999;
+}
+
+
+
+/* 여기부터 모달 */
+
+#admin_setting {
+	width: 400px;
+	padding-top: 20px;
+	font-size: larger;
+}
+
+#admin_setting_table {
+	margin-bottom: 20px;
+} 
+.td_pw {
+	background-color: #f6f6f6;
+}
+input[type=password].td_pw_input {
+	border: none;
+	background-color: #f6f6f6;
+}
+input[type=password]:focus.td_pw_input {
+	outline: none;
+}
+
+.admin_setting_label {
+	padding-right: 20px;
+}
+.admin_setting_td {
+	text-align: left;
+}
+
+.margin_tr {
+	height: 20px;
+}
+
+
+
+#admin_setting_btn {
+	font-size: large;
+	width: 80px;
+	height: 40px;
+	color: white;
+	background-color: #0066FF;
+	border-radius: 7px;
+	border: none;
+} #admin_setting_btn:hover {
+	cursor: pointer;
 }

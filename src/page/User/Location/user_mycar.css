@@ -15,6 +15,7 @@
     border: none;
     color: white;
     margin: 5px;
+    font-size: medium;
 }
 #searchAgain { background-color: #12c386;}
 #pay { background-color: #f0b416;}

@@ -4,6 +4,7 @@ export const getCheckSpace = (setState) =>
     axios.get(`/checkSpace`).then((res) => {
         res.data.emptySpace && setState(res.data.emptySpace);
     });
+// 내 차 위치
 export const getLocationCar = (setState , numberPlate) =>
     axios.get(`/locationCar` , {params:{numberPlate}}).then((res) => {
     res.data.locationCar && res.data.locationCar.length === 0
@@ -12,6 +13,16 @@ export const getLocationCar = (setState , numberPlate) =>
     }).catch((e)=>{
         alert('차번호가 존재하지 않습니다')
     });
+// 차번호 검색 자동완성
+export const getAutoCompleteData = (inputWord , setState) => 
+    axios.get(`/searchCarList` , {params : {numberPlate:inputWord}}).then((res) => {
+        console.log(res.data.carList);
+        setState(res.data.carList);
+    })
+
+
+
+
 
 // 현재 요금 가져오기 (income)
 export const getFee = (setState) =>

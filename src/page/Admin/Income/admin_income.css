@@ -78,6 +78,10 @@
 	padding: 10px;
 }
 
+.no_data {
+
+}
+
 .setFee {
 	margin-top: 40px;
 	/* border: solid; */
@@ -92,11 +96,13 @@
 }
 
 .setFee_Btn {
-	/* width: 50px;
-	height: 50px;
-	background-image: url('../../../style/img/setting_icon.png');
-	border: none; */
-}
+	width: 20px;
+	height: 20px;
+	background-image: url('../../../style/img/pen.png');
+	border: none;
+	background-size: cover;
+	background-repeat: no-repeat;
+} .setFee_Btn:hover { cursor: pointer; }
 
 
 
@@ -113,11 +119,12 @@
 }
 
 .modal {
-	width: 640px;
+	width: 700px;
 	height: 400px;
 	background-color: white;
 	position: absolute; left: 50%; top: 50%; 
-	transform: translate(-50%, -50%); text-align: center;
+	transform: translate(-50%, -50%); 
+	/* text-align: center; */
 	-webkit-box-shadow: 5px 6px 13px 1px black;
 	box-shadow: 5px 6px 13px 1px black;
 	/* #8C8C8C; */
@@ -136,4 +143,17 @@
 
 .hidden {
 	display: none;
+}
+
+#set_fee_btn {
+	margin-top: 30px;
+	font-size: large;
+	width: 80px;
+	height: 40px;
+	color: white;
+	background-color: #ff8a00;
+	border-radius: 7px;
+	border: none;
+} #set_fee_btn:hover {
+	cursor: pointer;
 }

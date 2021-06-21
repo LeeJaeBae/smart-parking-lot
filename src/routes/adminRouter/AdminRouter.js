@@ -17,6 +17,9 @@ function AdminRouter() {
 
 	return (
 		<>
+			<Route exact path='/admin'>
+				<AdminLogin/>
+			</Route>
 			<Route exact path='/admin/main'>
 				<AdminMain />
 			</Route>
@@ -28,9 +31,6 @@ function AdminRouter() {
 			</Route>
 			<Route exact path='/admin/alldata'>
 				<AdminAllParkingData />
-			</Route>
-			<Route path='/admin'>
-				<AdminLogin/>
 			</Route>
 		</>
 	);

@@ -44,7 +44,7 @@ class PayResult extends React.Component {
   render() {
     return (
       <div>
-        <h2>Result page</h2>
+        <h2>결제완료</h2>
       </div>
     );
   }

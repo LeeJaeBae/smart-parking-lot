@@ -1,6 +1,7 @@
-import React , { useState , useEffect, useRef } from 'react';
+import React , { useState , useEffect, useRef , Dispatch } from 'react';
 import { adminLogin } from '../../../api/admin';
-import { Dispatch } from 'react';
+
+
 // import { setAdminLogin } from '../../../api/admin';
 import styled from 'styled-components';
 
@@ -44,9 +45,11 @@ const AdminLogin = ( props ) => { // 파라미터로 props 넣어줘야 로그�
 
     const handleIDChange = (e) => {
         setAdminid(e.target.value);
+        // console.log(adminid);
     }
     const handlePWChange = (e) => {
         setAdminpw(e.target.value);
+        // console.log(adminpw)
     }
 
     // useEffect(() => { // 로그인정보 스토리지에 저장 / localStorage.setItem(keyName , keyValue )
@@ -81,14 +84,14 @@ const AdminLogin = ( props ) => { // 파라미터로 props 넣어줘야 로그�
                 type="text"
                 ref={id} 
                 onChange={handleIDChange}
-                placeholder='ID'
+                placeholder='이메일을 입력하세요'
             /><br/>
             <input
                 className="admin_loginbox" 
                 type="password" 
                 ref={pw} 
                 onChange={handlePWChange}
-                placeholder='PW'
+                placeholder='비밀번호를 입력하세요'
             /><br/>
             <button type='button' onClick={handleLogin} id="admin_loginbtn">LOGIN</button>
         </div>

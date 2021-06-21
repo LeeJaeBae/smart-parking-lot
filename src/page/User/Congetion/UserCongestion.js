@@ -10,21 +10,28 @@ import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import './user_congetion.css';
 
 // img
-import userlogo_img from '../../../style/img/user_logo.png';
+import userlogo_img from '../../../style/img/sumaro_text.png';
 import areaA from '../../../style/img/map_areaA.png';
 import areaB from '../../../style/img/map_areaB.png';
 import areaC from '../../../style/img/map_areaC.png';
 import areaD from '../../../style/img/map_areaD.png';
 
+
+
 const Background = styled.div`
-  text-align: center;
-  padding-top: 10px;
+	text-align: center;
+	padding-top: 20px;
+	width: 414px;
+	height: 736px;
+	margin: 0 auto;
+	text-align: center;
 `;
 
 const User_logo = styled.div`
   margin: 0 auto;
-  width: 120px;
-  height: 90px;
+  margin-top: 20px;
+  width: 240px;
+  height: 40px;
   margin-bottom: 30px;
   background-image: url(${userlogo_img});
   background-size: contain;

@@ -12,8 +12,17 @@ body {
 
 input[type=password] {
 	font-family: 'NanumBarunGothic';
+	text-align: left;
 }
 
 input[type=text] {
 	font-family: 'NanumBarunGothic';
+}
+
+input[type=button] {
+	cursor: pointer;
+}
+
+button {
+	cursor: pointer;
 }
