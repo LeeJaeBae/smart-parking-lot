@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import publisher from '../../../modules/publisher';
 import './admin_main.css';
 
-const socket = io('http://3.83.51.170:30001');
+const socket = io('http://52.79.82.77:50005');
 
 const style = {
 	display: 'inline-block',
