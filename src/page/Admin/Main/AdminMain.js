@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminLiveSituation } from '../../../api/admin';
 import { initJanus } from '../../../modules/client';
+import { io } from 'socket.io-client';
 import publisher from '../../../modules/publisher';
 import './admin_main.css';
+
+const socket = io('http://3.83.51.170:30001');
 
 const style = {
 	display: 'inline-block',
@@ -17,11 +20,24 @@ const style = {
 const Main = () => {
 	const [data, setData] = useState([]);
 	const [sessinId, setSessionId] = useState('');
+	const [mediaStream, setMediaStream] = useState(undefined);
 
 	useEffect(() => {
 		getAdminLiveSituation(setData);
-		initJanus();
-		publisher();
+		// initJanus();
+		// publisher();
+		socket.emit('join', 'test');
+		socket.on('streaming', (data) => {
+			const byteChars = atob(data);
+			// console.log(byte_chars);
+			const byteNumbers = new Array(byteChars.length);
+			for (let i = 0; i < byteChars.length; i++) {
+				byteNumbers[i] = byteChars.charCodeAt(i);
+			}
+			const byteArray = new Uint8Array(byteNumbers);
+			const blob = new Blob([byteArray], { type: 'image/png' });
+			setMediaStream(URL.createObjectURL(blob));
+		});
 	}, []);
 	useEffect(() => {
 		console.log(data);
@@ -39,14 +55,24 @@ const Main = () => {
 						</tr>
 						<tr>
 							<td className='video'>
-								<video id='cctv1' autoPlay={true} playsInline={true} muted={'muted'}>
-									test
-								</video>
+								<img
+									alt=''
+									id='video'
+									width='500'
+									height='360'
+									src={mediaStream}
+									style={{ border: 'solid 1px black' }}
+								/>
 							</td>
 							<td className='video'>
-								<video id='cctv2' autoPlay={true} playsInline={true} muted={'muted'}>
-									test
-								</video>
+								<img
+									alt=''
+									id='video'
+									width='500'
+									height='360'
+									src={mediaStream}
+									style={{ border: 'solid 1px black' }}
+								/>
 							</td>
 						</tr>
 						<tr>
@@ -56,9 +82,14 @@ const Main = () => {
 						</tr>
 						<tr>
 							<td className='video cctv' colSpan='2'>
-								<video id='myvideo' autoPlay={true} playsInline={true} muted={'muted'}>
-									test
-								</video>
+								<img
+									alt=''
+									id='video'
+									width='1024'
+									height='720'
+									src={mediaStream}
+									style={{ border: 'solid 1px black' }}
+								/>
 							</td>
 						</tr>
 					</table>

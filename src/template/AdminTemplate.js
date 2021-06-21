@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Route } from '../config/routes';
 
-import { useEffect , useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './AdminTemplate.css';
 import Menu from './navigator/menu';
@@ -23,8 +23,6 @@ const Title = ({ pathname }) => {
 };
 
 const AdminTemplate = ({ children }) => {
-
-
 	// 로그인 상태 관리 (로그인 안됐으면 로그인 페이지로 이동)
 	// const [isLogin, setIsLogin] = useState(false);
 
