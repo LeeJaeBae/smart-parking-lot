@@ -2,7 +2,8 @@
 
 #myCarLocation {
     margin: 30px 0 30px 0;
-    font-size: larger;
+    font-size: x-large;
+    line-height: 40px;
 }
 
 #button {
@@ -19,3 +20,15 @@
 }
 #searchAgain { background-color: #12c386;}
 #pay { background-color: #f0b416;}
+
+
+.my_car_location {
+    font-size: larger;
+    font-weight: bold;
+    color: rgb(199, 13, 13);
+}
+.my_fee{
+    font-size: larger;
+    font-weight: bold;
+    color: #ff8a00;
+}

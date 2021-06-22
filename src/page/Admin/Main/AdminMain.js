@@ -50,6 +50,34 @@ const Main = () => {
 				<div>
 					<table className='camera'>
 						<tr>
+							<td className='video_label'>입<br/>차</td>
+							<td className='video'>
+								<img
+									alt=''
+									id='video'
+									width='870'
+									height='380'
+									src={mediaStream}
+									style={{ border: 'solid 1px black' }}
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td className='video_label'>출<br/>차</td>
+							<td className='video'>
+								<img
+									alt=''
+									id='video'
+									width='870'
+									height='380'
+									src={mediaStream}
+									style={{ border: 'solid 1px black' }}
+								/>
+							</td>
+						</tr>
+					</table>
+					{/* <table className='camera'>
+						<tr>
 							<td className='video_label'>입차</td>
 							<td className='video_label'>출차</td>
 						</tr>
@@ -92,7 +120,7 @@ const Main = () => {
 								/>
 							</td>
 						</tr>
-					</table>
+					</table> */}
 				</div>
 			</div>
 		</>

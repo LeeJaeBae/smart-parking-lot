@@ -16,14 +16,14 @@ import { UserLocation } from '..';
 
 const Background = styled.div`
 	text-align: center;
-	padding-top: 130px;
+	padding-top: 120px;
 `;
 
 const User_logo = styled.div`
 	margin: 0 auto;
 	width: 120px;
 	height: 120px;
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 	background-image: url(${userlogo_img});
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -177,8 +177,8 @@ const MyCar = ( props ) => {
 				<Link to="/">
 				<User_logo></User_logo>
 				</Link> <br/>
-				<div id='myCarLocation'>내 차 위치는 {`${myCarLocation}`}이며, &nbsp;
-				요금은 {`${myFee}`}원 입니다</div>
+				<div id='myCarLocation'>내 차 위치는 <span className='my_car_location'>{`${myCarLocation}`}</span>이며,<br/>
+				요금은 <span className='my_fee'>{`${myFee}`}원</span> 입니다</div>
 				<div id='Pmap'>　</div>
 				<div id='button'>
 					<Link to={Route.user.main}>

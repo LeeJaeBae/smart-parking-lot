@@ -4,9 +4,9 @@
 	font-size: large;
 }
 .camera {
-	width: 1000px;
+	width: 910px;
 	text-align: center;
-	margin-left: 20px;
+	margin-left: 60px;
 }
 .camera,
 .camera th,
@@ -18,10 +18,11 @@
 .video_label {
 	background-color: #12c386;
 	color: white;
-	height: 25px;
+	width: 30px;
+	/* height: 25px; */
 }
 .video {
-	height: 340px;
+	/* height: 340px; */
 }
 /* .cctv {
     height: 500px;
