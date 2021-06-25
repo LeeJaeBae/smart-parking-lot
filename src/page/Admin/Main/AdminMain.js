@@ -45,7 +45,7 @@ const Main = () => {
 
 	return (
 		<>
-			<div className='status'>{`현재 ${data[0]}대 주차중 ${data[1]}대 평균 대기시간 4분 오늘 매출: ${data[2]}`}</div>
+			<div className='status'>{`현재 ${data[0]}대 주차중 ${data[1]}대 평균 대기시간 4분 오늘 매출: ${data[2]}`}원</div>
 			<div style={style}>
 				<div>
 					<table className='camera'>

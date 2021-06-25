@@ -73,13 +73,19 @@ const UserCongestion = () => {
                     {' '}
                     <User_logo></User_logo>{' '}
                 </Link>
-                <span id='space'>현재 {`${A+B+C+D}`} 대 주차가능 </span>
+                <span id='space'>현재 <span className='allOfSpace_num'>{`${A+B+C+D}`}</span> 대 주차가능 </span>
 
                 <div id='area'>
                     <div className='areas'>
                         <div className='text'>
                             <div className='areaName A'>A 구역</div>
-                            <div className='numOfSpace'> {`${A}`}대 주차 가능</div>
+                            {
+                                `${A}` == 0?
+                                <span className='numOfSpace_0'>만차</span> :
+                                <div className='numOfSpace'>
+                                <span className='numOfSpace_num'>{`${A}`}</span>대 주차 가능
+                                </div>
+                            }
                         </div>
                         <span className='map'>
 							<img src={areaA} alt='약도'/>
@@ -88,7 +94,13 @@ const UserCongestion = () => {
                     <div className='areas'>
                         <div className='text'>
                             <div className='areaName B'>B 구역</div>
-                            <div className='numOfSpace'> {`${B}`}대 주차 가능</div>
+                            {
+                                `${B}` == 0?
+                                <span className='numOfSpace_0'>만차</span> :
+                                <div className='numOfSpace'>
+                                <span className='numOfSpace_num'>{`${B}`}</span>대 주차 가능
+                                </div>
+                            }
                         </div>
                         <span className='map'>
 							<img src={areaB} alt='약도'/>
@@ -97,7 +109,13 @@ const UserCongestion = () => {
                     <div className='areas'>
                         <div className='text'>
                             <div className='areaName C'>C 구역</div>
-                            <div className='numOfSpace'> {`${C}`}대 주차 가능</div>
+                            {
+                                `${C}` == 0?
+                                <span className='numOfSpace_0'>만차</span> :
+                                <div className='numOfSpace'>
+                                <span className='numOfSpace_num'>{`${C}`}</span>대 주차 가능
+                                </div>
+                            }
                         </div>
                         <span className='map'>
 							<img src={areaC} alt='약도'/>
@@ -106,7 +124,13 @@ const UserCongestion = () => {
                     <div className='areas'>
                         <div className='text'>
                             <div className='areaName D'>D 구역</div>
-                            <div className='numOfSpace'> {`${D}`}대 주차 가능</div>
+                            {
+                                `${D}` == 0?
+                                <span className='numOfSpace_0'>만차</span> :
+                                <div className='numOfSpace'>
+                                <span className='numOfSpace_num'>{`${D}`}</span>대 주차 가능
+                                </div>
+                            }
                         </div>
                         <span className='map'>
 							<img src={areaD} alt='약도'/>

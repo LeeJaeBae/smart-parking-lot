@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Route } from '../../../config/routes';
 // import { UserLocation } from '..';
 
 // const location = useLocation();
@@ -7,7 +8,7 @@ class PayReady extends React.Component {
 
   
   state = {
-    next_redirect_mobile_url: "",
+    next_redirect_pc_url: "",
     tid: "",
     params: {
       cid: "TC0ONETIME",
@@ -19,9 +20,9 @@ class PayReady extends React.Component {
       vat_amount: 10, // 세금이 결제금액보다 크면 안됨
       tax_free_amount: 0,
       // router에 지정한 PayResult의 경로로 수정
-      approval_url: "/payresult",
-      fail_url: "/payresult",
-      cancel_url: "/payresult",
+      approval_url:  Route.user.payresult,
+      fail_url: Route.user.payresult,
+      cancel_url: Route.user.payresult, //127.0.0.1:3000
     },
   };
 
@@ -42,30 +43,30 @@ class PayReady extends React.Component {
       params,
     }).then((response) => {
       const {
-        data: { next_redirect_mobile_url, tid },
+        data: { next_redirect_pc_url, tid },
       } = response;
 
       // console.log(next_redirect_pc_url);
       console.log(tid);
       // localstorage에 tid 저장
 	    window.localStorage.setItem("tid", tid);
-      this.setState({ next_redirect_mobile_url, tid }); // 모바일 웹일 경우 next_redirect_mobile_url
+      this.setState({ next_redirect_pc_url, tid }); // 모바일 웹일 경우 next_redirect_mobile_url
 
 
       // reaplace : 주소 기록 남지않음, href : 주소 기록이 남음
-      document.location.href = next_redirect_mobile_url; 
+      document.location.href = next_redirect_pc_url; 
     });
 
   }
 
   render() {
-    const { next_redirect_mobile_url } = this.state;
+    const { next_redirect_pc_url } = this.state;
     return (
       
       <></>
       // <div>
       //   <h2>Pay page</h2>
-      //   <a href={next_redirect_mobile_url}>{next_redirect_mobile_url}</a>
+      //   <a href={next_redirect_pc_url}>{next_redirect_pc_url}</a>
       // </div>
     );
   }

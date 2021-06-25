@@ -490,7 +490,7 @@ const Income = () => {
 					</div>
 				</div>
 				<div className='income'>
-					총 수입 {setFeeFormat(total)}원 &nbsp;
+					총 수입 <span className='allOfIncome'>{setFeeFormat(total)}</span>원 &nbsp;
 					<button className='setFee_Btn' onClick={openModal}></button>
 				</div>
 {/* 				

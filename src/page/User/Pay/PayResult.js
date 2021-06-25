@@ -1,6 +1,26 @@
 import React from "react";
 import axios from "axios";
+import styled from 'styled-components';
+import userlogo_img from '../../../style/img/sumaro_circle.png';
+import { Link, useLocation , Redirect } from 'react-router-dom';
+import './payresult.css';
 
+import { Route } from '../../../config/routes';
+
+const Background = styled.div`
+	text-align: center;
+	padding-top: 120px;
+`;
+
+const User_logo = styled.div`
+	margin: 0 auto;
+	width: 120px;
+	height: 120px;
+	margin-bottom: 15px;
+	background-image: url(${userlogo_img});
+	background-size: contain;
+	background-repeat: no-repeat;
+`;
 class PayResult extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +47,8 @@ class PayResult extends React.Component {
   componentDidMount() {
     const { params } = this.state;
 
+    console.log(this.state.pg_token)
+
     axios({
       url: "/v1/payment/approve",
       method: "POST",
@@ -43,9 +65,25 @@ class PayResult extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>결제완료</h2>
-      </div>
+      <Background>
+        <Link to="/">
+				<User_logo></User_logo>
+				</Link> <br/>
+        <h1>
+          결제가 완료되었습니다
+        </h1>
+        <div>
+        <Link to={Route.user.main}>
+					<button
+						select='main'
+						id='go_to_main'
+						className='buttons'>
+						처음으로
+					</button>
+					</Link>
+        </div>
+
+      </Background>
     );
   }
 }

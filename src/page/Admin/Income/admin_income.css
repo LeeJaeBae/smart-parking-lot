@@ -141,6 +141,12 @@
 	border: none;
 }
 
+.allOfIncome {
+	font-size: larger;
+	font-weight: bold;
+	color: #ff8a00;
+}
+
 .hidden {
 	display: none;
 }

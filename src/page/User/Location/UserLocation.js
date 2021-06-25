@@ -55,7 +55,7 @@ const MyCar = ( props ) => {
 	useEffect(()=>{
 		console.log(location.state.data)
 		// location 안에 state가 있음
-		getFee(setFee);
+		// getFee(setFee);
 		location.state.data && setData(location.state.data)
 	},[])
 
