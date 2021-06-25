@@ -6,6 +6,23 @@
 body {
 	width: 414px;
 	height: 736px;
-	text-align: center;
 	margin: 0 auto;
+	text-align: center;
+}
+
+input[type=password] {
+	font-family: 'NanumBarunGothic';
+	text-align: left;
+}
+
+input[type=text] {
+	font-family: 'NanumBarunGothic';
+}
+
+input[type=button] {
+	cursor: pointer;
+}
+
+button {
+	cursor: pointer;
 }

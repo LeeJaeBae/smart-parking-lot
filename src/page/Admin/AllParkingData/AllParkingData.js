@@ -189,8 +189,8 @@ const AllParkingData = () => {
 						<th>차번호</th>
 						<th>입차</th>
 						<th>출차</th>
-						<th>요금</th>
-						<th style={RightTHstyle}>결제</th>
+						<th style={RightTHstyle}>요금</th>
+						{/* <th style={RightTHstyle}>결제</th> */}
 					</tr>
 					{/* 테이블 */}
 					{allData.length > 0 ? (
@@ -205,7 +205,7 @@ const AllParkingData = () => {
 									setFeeFormat(car.car_fee) : car.car_fee
 									}
 								</td> {/*요금*/}
-								<td>{car.car_payment_type}{/*결제유형*/}</td>
+								{/* <td>{car.car_payment_type}결제유형</td> */}
 							</tr>
 						))
 					) : (

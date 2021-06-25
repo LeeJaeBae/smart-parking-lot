@@ -7,10 +7,20 @@ import {
 	AdminLogin
 } from '../../page/Admin';
 
+import { useState , useEffect } from 'react';
+
 function AdminRouter() {
+
+
+
+
+
 	return (
 		<>
 			<Route exact path='/admin'>
+				<AdminLogin/>
+			</Route>
+			<Route exact path='/admin/main'>
 				<AdminMain />
 			</Route>
 			<Route exact path='/admin/current'>
@@ -22,9 +32,6 @@ function AdminRouter() {
 			<Route exact path='/admin/alldata'>
 				<AdminAllParkingData />
 			</Route>
-			{/* <Route path='/admin/login'>
-				<AdminLogin/>
-			</Route> */}
 		</>
 	);
 }

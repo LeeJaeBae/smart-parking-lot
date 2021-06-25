@@ -117,12 +117,12 @@ const Income = () => {
 		// console.log('요금 받아왔음');
 	}, []);
 
-	useEffect(() => {
+	// useEffect(() => {
 		// getFee(setFee);
 		// handleGetData();
 		// console.log('요금 받아왔음');
 		// refFee.current.value = fee;
-	}, [fee]);
+	// }, [fee]);
 
 	useEffect(() => {
 		// console.log(feeData);
@@ -387,6 +387,8 @@ const Income = () => {
 		setFee(refFee.current.value);
 		// console.log('변경하고 싶은 요금 : ' + refFee.current.value);
 		setAdminFee(setFee, refFee.current.value);
+
+		closeModal();
 	};
 
 	const setFeeFormat = (total) => {
@@ -488,9 +490,9 @@ const Income = () => {
 					</div>
 				</div>
 				<div className='income'>
-					총 수입 {setFeeFormat(total)}원 &nbsp;
-					<button className='setFee_Btn' onClick={openModal}>요금설정</button>
-					</div>
+					총 수입 <span className='allOfIncome'>{setFeeFormat(total)}</span>원 &nbsp;
+					<button className='setFee_Btn' onClick={openModal}></button>
+				</div>
 {/* 				
 				<br /> */}
 			</div>
@@ -499,7 +501,7 @@ const Income = () => {
 				{feeData.length > 0 ? (
 					<Line id='test' data={data} options={options} />
 				) : (
-					<>데이터가 없습니다</>
+					<div className='no_data'>데이터가 없습니다</div>
 				)}
 			</div>
 			{/* 요금 설정 */}
@@ -508,8 +510,8 @@ const Income = () => {
 					현재 요금은 시간당 {fee}원 이며,&nbsp;&nbsp;
 					<input type='number' ref={refFee} defaultValue={fee} />
 					원으로 변경합니다. &nbsp;&nbsp;&nbsp;
-					<br />
-					<button onClick={handleSetFee}>설정</button>
+					<br/>
+					<button id='set_fee_btn' onClick={handleSetFee}>설정</button>
 				</div>
 			</Modal>
 		</>

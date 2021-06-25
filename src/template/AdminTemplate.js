@@ -1,6 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { Route } from '../config/routes';
 
+import { useEffect, useState } from 'react';
+
 import './AdminTemplate.css';
 import Menu from './navigator/menu';
 
@@ -21,6 +23,27 @@ const Title = ({ pathname }) => {
 };
 
 const AdminTemplate = ({ children }) => {
+	// 로그인 상태 관리 (로그인 안됐으면 로그인 페이지로 이동)
+	// const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		if(!localStorage.getItem('tokenCode')){
+		// sessionStorage 에 user_id 라는 key 값으로 저장된 값이 없다면
+		//   console.log('isLogin ?? :: ', isLogin)
+
+		  document.location.href = "/admin"; 
+		} 
+		// else {
+		// // sessionStorage 에 user_id 라는 key 값으로 저장된 값이 있다면
+		// // 로그인 상태 변경
+		//   setIsLogin(true)
+		//   console.log('isLogin ?? :: ', isLogin)
+		// }
+	  })
+// ///////////////////////
+
+
+
 	const pathName = useLocation().pathname;
 	console.log(pathName);
 
@@ -38,6 +61,15 @@ const AdminTemplate = ({ children }) => {
 };
 
 export default AdminTemplate;
+
+
+
+
+
+
+
+
+
 
 // const [title, setTitle] = useState('주차장 현황'); // 상단바 이름
 
